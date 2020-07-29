@@ -1,0 +1,30 @@
+.header {
+  background-color: $brandColorDark;
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+  ul {
+      width:100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    li {
+      margin: 10px;
+
+      a {
+        font-size: 16px;
+        color: $brandLightText;
+        &.router-link-exact-active {
+          color: $brandColorlight;
+        }
+      }
+    }
+  }
+  .auth-button {
+    margin: 10px;
+    font-size: 16px;
+    color: $brandLightText;
+    text-transform: uppercase;
+    cursor: pointer;
+  }
+}
