@@ -2,6 +2,7 @@ import Vue from 'vue'
 import App from './App.vue'
 import router from './router'
 import store from './store'
+import Vuelidate from 'vuelidate'
 
 Vue.config.productionTip = false
 
@@ -10,6 +11,8 @@ import 'firebase/auth'
 import 'firebase/database'
 import 'firebase/messaging'
 import 'firebase/storage'
+
+Vue.use(Vuelidate)
 new Vue({
   router,
   store,

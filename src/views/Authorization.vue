@@ -2,12 +2,16 @@
   <div class="form">
     <!-- tt:{{submitStatus}} -->
     <p class="title">Authorization</p>
-    <h2 v-if="loading">loading...</h2>
     <label for="email">E-mail</label>
-    <input v-model="email" id="email" type="email" />
+    <input v-model="email" id="email" type="email"  placeholder="Enter E-mail" />
     <label for="password">Password</label>
-    <input v-model="password" id="password" type="password" />
-    <button class="button" @click="submit()">SIGN IN</button>
+    <input v-model="password" id="password" type="password"  placeholder="Enter password"/>
+    <button v-if="!loading" class="button" @click="submit()">SIGN IN</button>
+    <button v-else class="button disabled">Loading...</button>
+    
+    <span
+      class="errorMsg"
+    >{{submitStatus}}</span>
   </div>
 </template>
 
@@ -20,6 +24,9 @@ export default {
       password: "",
       submitStatus: null,
     };
+  },
+  validations:{
+
   },
   methods: {
     submit() {

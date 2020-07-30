@@ -5,6 +5,7 @@ import Authorization from '../views/Authorization.vue'
 import  Home from '../views/Home.vue'
 import store from '../store'
 import User from '../views/User.vue'
+
 Vue.use(VueRouter)
 
   const routes = [
