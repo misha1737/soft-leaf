@@ -1,12 +1,21 @@
 <template>
   <div class="header">
+    <div class="logo">
+      <router-link to="/">
+      <img src="./../assets/leaf.svg" alt="">
+      </router-link>
+    </div>
     <ul>
       <li v-for="link in linkMenu" :key="link.title">
         <router-link :to="link.url">{{link.title}}</router-link>
       </li>
-      
     </ul>
-    <span v-if="checkUser" @click="logout()" class="auth-button">logout</span>
+    
+    <div class="authMenu" >
+      <span v-if="checkUser" @click="logout()" class="auth-button">Sign out</span>
+    <router-link v-if="!checkUser" class="auth-button" to="/authorization">Sign in</router-link>
+    <router-link v-if="!checkUser" class="auth-button" to="/registration">Sign up</router-link>
+    </div>
   </div>
 </template>
 <script>
@@ -29,12 +38,12 @@ export default {
         return [
           { title: "Home", url: "/" },
           { title: "About", url: "/about" },
+          { title: "User", url: "/user" },
         ];
       }
       return [
         { title: "Home", url: "/" },
-        { title: "Registration", url: "/registration" },
-        { title: "Authorization", url: "/authorization" },
+       { title: "About", url: "/about" },
       ];
     },
   },

@@ -1,13 +1,15 @@
 <template>
-  <div class="hello">
-    tt:{{submitStatus}}
-    <h1>hello world</h1>
+  <div  class="form">
+    <!-- tt:{{submitStatus}} -->
+    <h1 class="title">Registration</h1>
     <h2 v-if="loading">loading...</h2>
     <label for="email">E-mail</label>
     <input v-model="email" id="email" type="email">
     <label for="password">Password</label>
     <input v-model="password" id="password" type="password">
-   <button @click="submit()">click</button>
+    <label for="confirmPassword">Confirm password</label>
+    <input v-model="confirmPassword" id="confirmPassword" type="password">
+   <button class="button" @click="submit()">SIGN UP</button>
   </div>
 </template>
 
@@ -30,7 +32,7 @@ export default {
       this.$store.dispatch('registerUser', user).then(()=>{
           console.log("register");
           this.submitStatus = 'OK';
-          this.$router.push('/ok')
+          this.$router.push('/user')
       }).catch(err=>{
         console.log(err);
         this.submitStatus=err;
@@ -48,17 +50,6 @@ export default {
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style lang="scss">
 
-.hello{
-  display: flex;
-    flex-direction: column;
-    width: 300px;
-    label{
-      margin:10px 0;
-    }
-    button{
-      margin-top:10px;
-    }
-}
 
 </style>
  

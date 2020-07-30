@@ -4,6 +4,7 @@ import Registration from '../views/Registration.vue'
 import Authorization from '../views/Authorization.vue'
 import  Home from '../views/Home.vue'
 import store from '../store'
+import User from '../views/User.vue'
 Vue.use(VueRouter)
 
   const routes = [
@@ -23,12 +24,19 @@ Vue.use(VueRouter)
     component: Authorization
   },
   {
-    path: '/about',
-    name: 'About',
-    component: () => import(/* webpackChunkName: "about" */ '../views/About.vue'),
+    path: '/user',
+    name: 'user',
+    component: User,
     beforeEnter(to, from, next){
       store.getters.checkUser ? next() : next('/authorization');
     }
+  },
+  
+  {
+    path: '/about',
+    name: 'About',
+    component: () => import(/* webpackChunkName: "about" */ '../views/About.vue'),
+   
   }
 ]
 
