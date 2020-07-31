@@ -7,7 +7,8 @@ export default {
             postName: null,
             postContent: null,
             description: null,
-            userId: null
+            userId: null,
+            id: null
         },
         posts:[]
     },
@@ -38,7 +39,8 @@ export default {
                             p.postName,
                             p.postContent,
                             p.description,
-                            p.userId
+                            p.userId,
+                            key
                         )
                     ) 
                 })
@@ -75,8 +77,11 @@ export default {
     },
 
     getters: {
-        posts (state){
+        posts: state=>{
             return state.posts
+        },
+        post: state=>id=>{
+            return state.posts.find(state => state.id === id);
         },
     }
 }

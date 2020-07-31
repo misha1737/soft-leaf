@@ -6,6 +6,8 @@ import  Home from '../views/Home.vue'
 import store from '../store'
 import User from '../views/User.vue'
 import PostEdit from '../views/PostEdit.vue'
+import Post from '../views/Post.vue'
+
 Vue.use(VueRouter)
 
   const routes = [
@@ -18,6 +20,12 @@ Vue.use(VueRouter)
     path: '/postEdit',
     name: 'postEdit',
     component: PostEdit
+  },
+  {
+        path: '/post/:id',
+        name: 'Post',
+        props: true,
+        component: Post
   },
   {
     path: '/Registration',

@@ -2,6 +2,7 @@ body{
     margin:0;
     font-family: $Helvetica;
     background-color: $brandColorBackground;
+
 }
 ul{
     list-style: none;
@@ -12,11 +13,28 @@ a{
     text-decoration:none;
     font-size: 24px;
     font-family: $Helvetica;
+    color: $brandDarkText;
 }
 p{
     font-size: 24px;
     font-family: $Helvetica;
     margin:0;
+    
+}
+h1, h2, h3, h4, h5, h6{
+    margin:0;
+    font-family: $Helvetica;
+    font-size: 24px;
+  
+}
+.contentBlock{
+    width:1200px;
+    margin:auto;
+    background: white;
+    box-shadow: 0 1px 8px 0 #555;
+    margin: 40px auto;
+    padding:40px;
+    min-height: calc(100vh - 220px);
 }
 
  .form{
