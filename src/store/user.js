@@ -36,11 +36,9 @@ export default{
             try{
                 //logic
                 const user = await firebase.auth().signInWithEmailAndPassword(email, password);
-                console.log(user.user.uid);
                 commit('setUser', new User(user.user.uid))
                 commit('setLoading',false)
             }catch(error){
-                console.log("err");
                 commit('setLoading',false)
                 commit('setError', error.message)
                 throw error
@@ -48,7 +46,6 @@ export default{
         },
         loggedUser({commit}, payload){
              commit('setUser', new User(payload.uid)) ;  
-             console.log(payload.uid);
         },
         logoutUser({commit}){
                 firebase.auth().signOut();

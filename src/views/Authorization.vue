@@ -1,5 +1,5 @@
 <template>
-  <div class="form">
+  <div class="form small">
     <!-- tt:{{submitStatus}} -->
     <p class="title">Authorization</p>
     <label for="email">E-mail</label>

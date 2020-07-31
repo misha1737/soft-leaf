@@ -32,6 +32,7 @@ new Vue({
       if (user){
         this.$store.dispatch('loggedUser',user);
       }
+      this.$store.dispatch('loadPosts');
     })
   }
 }).$mount('#app')

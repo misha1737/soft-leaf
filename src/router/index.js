@@ -5,7 +5,7 @@ import Authorization from '../views/Authorization.vue'
 import  Home from '../views/Home.vue'
 import store from '../store'
 import User from '../views/User.vue'
-
+import PostEdit from '../views/PostEdit.vue'
 Vue.use(VueRouter)
 
   const routes = [
@@ -13,6 +13,11 @@ Vue.use(VueRouter)
     path: '/',
     name: 'Home',
     component: Home
+  },
+  {
+    path: '/postEdit',
+    name: 'postEdit',
+    component: PostEdit
   },
   {
     path: '/Registration',

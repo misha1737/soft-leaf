@@ -39,6 +39,8 @@ export default {
           { title: "Home", url: "/" },
           { title: "About", url: "/about" },
           { title: "User", url: "/user" },
+          { title: "Edit Post", url: "/postEdit" },
+
         ];
       }
       return [
