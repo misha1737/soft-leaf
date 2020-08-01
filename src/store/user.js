@@ -13,14 +13,16 @@ export default{
 
     },
     actions:{
-        async registerUser ({commit}, {email, password}){
+        async registerUser ({commit}, {email, password, userName}){
             commit('clearError')
             commit('setLoading',true)
             try{
                 //logic
                 const user = await firebase.auth().createUserWithEmailAndPassword(email, password);
+                //так записуюься дані в базу
+                await firebase.database().ref('users/'+user.user.uid+'/name').set(userName);
                 console.log(user.user.uid);
-                commit('setUser', new User(user.user.uid))
+                commit('setUser', new User(user.user.uid,userName,null,null))
                 commit('setLoading',false)
             }catch(error){
                 console.log("err");
@@ -36,8 +38,12 @@ export default{
             try{
                 //logic
                 const user = await firebase.auth().signInWithEmailAndPassword(email, password);
-                commit('setUser', new User(user.user.uid))
-                commit('setLoading',false)
+
+                const userInfo= await (await firebase.database().ref('users/'+user.user.uid).once('value')).val();
+                commit('setUser', new User(user.user.uid,userInfo.name,userInfo.moderator,userInfo.admin ))
+                //commit('setLoading',false)
+                
+               
             }catch(error){
                 commit('setLoading',false)
                 commit('setError', error.message)

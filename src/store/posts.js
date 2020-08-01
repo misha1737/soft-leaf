@@ -64,7 +64,8 @@ export default {
                     payload.postName,
                     payload.postContent,
                     payload.description,
-                    getters.user.id);
+                    getters.user.id,
+                    null);
                 const post = await firebase.database().ref('posts').push(newPost);
                 commit('savePost', newPost);
                 commit('setLoading', false)
