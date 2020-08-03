@@ -8,7 +8,7 @@
       <img v-if="post.url" class="post__img" :src="post.url" :alt="post.postName" />
       <img v-else class="post__img" src="./../assets/post.jpg" :alt="post.postName" />
       <h2>{{post.description}}</h2>
-      <p>{{post.postContent}}</p>
+      <span v-html="post.postContent"></span>
   </article>
   </div>
 </template>

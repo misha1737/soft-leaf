@@ -2,7 +2,6 @@
   <div class="form">
     <p v-if="id==0" class="title">Create Post</p>
     <p v-else class="title">Post edit</p>
-
     <label for="postName">Post Name</label>
     <input v-model="postName"  id="postName" type="text" placeholder="Enter PostName" />
 
@@ -10,7 +9,10 @@
     <textarea v-model="description" id="description" placeholder="Enter description" />
 
     <label for="postContent">post</label>
-    <textarea v-model="postContent" id="postContent" placeholder="Enter post" />
+
+    <vue-editor v-model="postContent" />
+
+   
 
     <div  :class="{disabled : id==0}" class="uploadImage " >
       <div>
@@ -53,6 +55,8 @@
 
 <script>
 import firestore from "firebase/app";
+import { VueEditor } from "vue2-editor";
+
 export default {
   name: "MainContent",
 
@@ -72,6 +76,7 @@ export default {
   props: {
     id: String,
   },
+components: { VueEditor },
   validations: {},
   methods: {
     previewImage(event) {
