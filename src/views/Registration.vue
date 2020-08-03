@@ -2,6 +2,27 @@
   <div class="form small">
     <p class="title">Registration</p>
 
+
+    <label for="userName">Your mame</label>
+    <input
+      v-model="userName"
+      :class="{invalid: ($v.userName.$dirty && !$v.userName.required) || ($v.userName.$dirty && !$v.userName.minLength) || ($v.userName.$dirty && !$v.userName.maxLength)}"
+      id="userName"
+      type="text"
+      placeholder="Enter your name"
+    />
+    <span v-if="$v.userName.$dirty && !$v.userName.required" class="errorMsg">The name field is required</span>
+    <span
+      v-if="$v.userName.$dirty && !$v.userName.minLength"
+      class="errorMsg"
+    >The userName should be at least 2 characters</span>
+  <span
+      v-if="$v.userName.$dirty && !$v.userName.maxLength"
+      class="errorMsg"
+    >Username must be no more than 30 characters</span>
+
+
+
     <label for="email">E-mail</label>
     <input
       v-model.trim="email"
@@ -54,7 +75,7 @@
 </template>
 
 <script>
-import { email, required, minLength } from "vuelidate/lib/validators";
+import { email, required, minLength, maxLength } from "vuelidate/lib/validators";
 export default {
   name: "Registration",
   data() {
@@ -63,11 +84,13 @@ export default {
       password: "",
       confirmPassword: "",
       submitStatus: null,
+      userName:""
     };
   },
   validations: {
     email: { email, required },
     password: { required, minLength: minLength(6) },
+    userName: {required, minLength: minLength(2), maxLength: maxLength(30)}
   },
   methods: {
     submit() {
@@ -81,6 +104,7 @@ export default {
       const user = {
         email: this.email,
         password: this.password,
+        userName: this.userName
       };
       this.$store
         .dispatch("registerUser", user)

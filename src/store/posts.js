@@ -18,7 +18,8 @@ export default {
         },
         savePost(state, payload) {
             state.newPost = payload
-        }
+        },
+       
         
     },
     actions: {
@@ -67,6 +68,7 @@ export default {
                     getters.user.id,
                     null);
                 const post = await firebase.database().ref('posts').push(newPost);
+                
                 commit('savePost', newPost);
                 commit('setLoading', false)
             } catch (error) {
@@ -75,6 +77,33 @@ export default {
                 throw error
             }
         },
+        async updatePost({ commit, getters }, payload) {
+            commit('clearError')
+            commit('setLoading', true)
+            try {
+                //logic
+                console.log('start update')
+                const updatedPost = new Post(
+                    payload.postName,
+                    payload.postContent,
+                    payload.description,
+                    getters.user.id,
+                    null
+                    );
+                 await firebase.database().ref('posts/'+payload.id).update(
+                    updatedPost
+                );
+                commit('setLoading', false)
+            } catch (error) {
+                commit('setLoading', false)
+                commit('setError', error.message)
+                throw error
+            }
+        },
+
+            
+
+
     },
 
     getters: {

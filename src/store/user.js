@@ -8,19 +8,20 @@ export default{
     mutations:{
         setUser(state, payload){
             state.user = payload
-           
         }
 
     },
     actions:{
-        async registerUser ({commit}, {email, password}){
+        async registerUser ({commit}, {email, password, userName}){
             commit('clearError')
             commit('setLoading',true)
             try{
                 //logic
                 const user = await firebase.auth().createUserWithEmailAndPassword(email, password);
+                //так записуюься дані в базу
+                await firebase.database().ref('users/'+user.user.uid+'/name').set(userName);
                 console.log(user.user.uid);
-                commit('setUser', new User(user.user.uid))
+                commit('setUser', new User(user.user.uid,userName,null,null))
                 commit('setLoading',false)
             }catch(error){
                 console.log("err");
@@ -36,17 +37,21 @@ export default{
             try{
                 //logic
                 const user = await firebase.auth().signInWithEmailAndPassword(email, password);
-                console.log(user);
-                commit('setUser', new User(user.user.uid))
-                commit('setLoading',false)
+
+
+                const userInfo= await (await firebase.database().ref('users/'+user.user.uid).once('value')).val();
+                commit('setUser', new User(user.user.uid,userInfo.name,userInfo.moderator,userInfo.admin ))
+                //commit('setLoading',false)
+
             }catch(error){
                 commit('setLoading',false)
                 commit('setError', error.message)
                 throw error
             }
         },
-        loggedUser({commit}, payload){
-             commit('setUser', new User(payload.uid)) ;  
+        async loggedUser({commit}, payload){
+                const userInfo= await (await firebase.database().ref('users/'+payload.uid).once('value')).val();
+                commit('setUser', new User(payload.uid,userInfo.name,userInfo.moderator,userInfo.admin ))
         },
         logoutUser({commit}){
                 firebase.auth().signOut();
@@ -59,6 +64,12 @@ export default{
         },
         checkUser (state) {
             return state.user !== null
+        },
+        isUserAdmin (state) {
+            return (state.user !== null && state.user.admin)
+        },
+        isUserModerator (state) {
+            return (state.user !== null && state.user.moderator)
         }
     }
 }
