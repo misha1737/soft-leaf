@@ -36,6 +36,7 @@ export default{
             try{
                 //logic
                 const user = await firebase.auth().signInWithEmailAndPassword(email, password);
+                console.log(user);
                 commit('setUser', new User(user.user.uid))
                 commit('setLoading',false)
             }catch(error){
