@@ -105,4 +105,9 @@ h1, h2, h3, h4, h5, h6{
        min-height: 12px;
       width: calc(100% - 80px);
     }
+    .uploadImage{
+        &.disabled{
+            opacity:0.3;
+        }
+    }
  }

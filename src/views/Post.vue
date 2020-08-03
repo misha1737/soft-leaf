@@ -5,7 +5,8 @@
       <div v-if="isUserModerator" class="isUserModerator">
         <router-link  :to="'/postEdit/'+id">edit</router-link>
       </div>
-      <img class="post__img" src="./../assets/post.jpg" :alt="post.postName" />
+      <img v-if="post.url" class="post__img" :src="post.url" :alt="post.postName" />
+      <img v-else class="post__img" src="./../assets/post.jpg" :alt="post.postName" />
       <h2>{{post.description}}</h2>
       <p>{{post.postContent}}</p>
   </article>

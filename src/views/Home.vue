@@ -1,9 +1,11 @@
 <template>
   <div class="posts contentBlock">
     <p class="title">This is a Home page</p>
-    <div class="postPreview" v-for="post in posts" :key="post.id">
-      <router-link :to="'/post/'+post.id">
-        <img class="postPreview__img" src="./../assets/post.jpg" alt />
+    <div  v-for="post in posts" :key="post.id">
+      <router-link class="postPreview" :to="'/post/'+post.id">
+     
+        <img v-if="post.url" class="postPreview__img" :src="post.url" alt /> 
+        <img v-else class="postPreview__img" src="./../assets/post.jpg" alt />
         <div class="postPreview__text">
           <h2>{{post.postName}}</h2>
           <h3>{{post.description}}</h3>

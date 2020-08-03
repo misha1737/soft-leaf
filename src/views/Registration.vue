@@ -109,7 +109,6 @@ export default {
       this.$store
         .dispatch("registerUser", user)
         .then(() => {
-          console.log("register");
           this.submitStatus = "OK";
           this.$router.push("/user");
         })

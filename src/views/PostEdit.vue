@@ -2,9 +2,9 @@
   <div class="form">
     <p v-if="id==0" class="title">Create Post</p>
     <p v-else class="title">Post edit</p>
-   
+
     <label for="postName">Post Name</label>
-    <input v-model="postName" id="postName" type="text" placeholder="Enter PostName" />
+    <input v-model="postName"  id="postName" type="text" placeholder="Enter PostName" />
 
     <label for="description">description</label>
     <textarea v-model="description" id="description" placeholder="Enter description" />
@@ -12,7 +12,22 @@
     <label for="postContent">post</label>
     <textarea v-model="postContent" id="postContent" placeholder="Enter post" />
 
-    <input type="file" />
+    <div  :class="{disabled : id==0}" class="uploadImage " >
+      <div>
+        <p>
+          Progress: {{uploadValue.toFixed()+"%"}}
+          <progress :value="uploadValue" max="100"></progress>
+        </p>
+      </div>
+
+      <div>
+        
+        <img class="preview" :src="picture" />
+        <br />
+      </div>
+      <input type="file" @change="previewImage" accept="image/" />
+      <button @click="uploadImg()">Upload</button>
+    </div>
 
     <label for="contactChoice1">Draft</label>
     <input type="radio" id="contactChoice1" name="contact" value="email" checked />
@@ -37,6 +52,7 @@
 </template>
 
 <script>
+import firestore from "firebase/app";
 export default {
   name: "MainContent",
 
@@ -45,83 +61,136 @@ export default {
       postName: "",
       postContent: "",
       description: "",
-      submitStatus: null
+      submitStatus: null,
+
+      //upl img
+      imageData: null,
+      picture: null,
+      uploadValue: 0,
     };
   },
   props: {
-    id: String
+    id: String,
   },
   validations: {},
   methods: {
+    previewImage(event) {
+      this.uploadValue = 0;
+      this.picture = null;
+      this.imageData = event.target.files[0];
+    },
+    uploadImg() {
+      if(this.id==0){
+        return
+      }
+      this.picture = null;
+      const storageRef = firestore
+        .storage()
+        .ref(`posts/${this.id}/${this.imageData.name}`)
+        .put(this.imageData);
+      storageRef.on(
+        "state_changed",
+        (snapshot) => {
+          this.uploadValue =
+            (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+        },
+        (error) => {
+          console.log(error.message);
+        },
+        () => {
+          this.uploadValue = 100;
+          storageRef.snapshot.ref.getDownloadURL().then((url) => {
+            this.picture = url;
+          });
+        }
+      );
+    },
     submit() {
-      const post = {
+      const postObj = {
         postName: this.postName,
         postContent: this.postContent,
         description: this.description,
-        id: this.id==0 ? null : this.id
+        id: this.id == 0 ? null : this.id,
+        url: this.picture
       };
       //for create post
-      if(this.id==0){
-      this.$store.dispatch("savePost", post)
-        .then(() => {
-          this.submitStatus = "OK";
-           this.$store.dispatch('loadPosts');
-        })
-        .catch(err => {
-          console.log(err);
-          this.submitStatus = err;
-        });
+      if (this.id == 0) {
+        this.$store
+          .dispatch("savePost", postObj)
+          .then(() => {
+            this.submitStatus = "OK";
+            this.$store.dispatch("loadPosts");
+          })
+          .catch((err) => {
+            console.log(err);
+            this.submitStatus = err;
+          });
       } //for edit post
-      else{
-        this.$store.dispatch("updatePost", post)
-        .then(() => {
-          this.submitStatus = "OK";
-           this.$store.dispatch('loadPosts');
-        })
-        .catch(err => {
-          console.log(err);
-          this.submitStatus = err;
-        });
+      else {
+        this.$store
+          .dispatch("updatePost", postObj)
+          .then(() => {
+            this.submitStatus = "OK";
+            this.$store.dispatch("loadPosts");
+          })
+          .catch((err) => {
+            console.log(err);
+            this.submitStatus = err;
+          });
       }
-    }
+    },
+    
   },
+  mounted(){
+          if (this.post && this.id != 0) {
+        this.postName = this.post.postName;
+        this.postContent = this.post.postContent;
+        this.description = this.post.description;
+        this.picture = this.post.url;
+      } else {
+        this.postName = "";
+        this.postContent = "";
+        this.description = "";
+        this.picture = "";
+      }
+    },
   computed: {
     loading() {
       return this.$store.getters.loading;
     },
     post() {
-        return this.$store.getters.post(this.id);
-    
-       // return this.$store.getters.post(this.id);
-      
-        
-    }
+      console.log('computed');
+      return this.$store.getters.post(this.id);
+    },
   },
-  mounted() {
-   if(this.post && this.id!=0){
-    this.postName = this.post.postName;
-    this.postContent = this.post.postContent;
-    this.description = this.post.description;
-    }else{
-    this.postName = '';
-    this.postContent = '';
-    this.description = '';
-    }
-    
-  },
-    watch: {
+  watch: {
     id: function (val) {
-        if(this.post && this.id!=0){
+      if (this.post && this.id != 0) {
         this.postName = this.post.postName;
         this.postContent = this.post.postContent;
         this.description = this.post.description;
-        }else{
-        this.postName = '';
-        this.postContent = '';
-        this.description = '';
-        }
+        this.picture = this.post.url;
+      } else {
+        this.postName = "";
+        this.postContent = "";
+        this.description = "";
+        this.picture = "";
+      }
     },
+    post: function (val) {
+        if (this.post && this.id != 0) {
+              this.postName = this.post.postName;
+              this.postContent = this.post.postContent;
+              this.description = this.post.description;
+              this.picture = this.post.url;
+            } else {
+              this.postName = "";
+              this.postContent = "";
+              this.description = "";
+              this.picture = "";
+            }
     }
+  },
 };
 </script>
 

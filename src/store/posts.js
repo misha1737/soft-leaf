@@ -14,10 +14,10 @@ export default {
     },
     mutations: {
         loadPosts(state, payload){
-            state.posts= payload;
+            state.posts = payload;
         },
         savePost(state, payload) {
-            state.newPost = payload
+            state.newPost = payload;
         },
        
         
@@ -41,11 +41,12 @@ export default {
                             p.postContent,
                             p.description,
                             p.userId,
-                            key
+                            key,
+                            p.url
                         )
                     ) 
                 })
-                //console.log();
+               
                 commit('loadPosts', postsArray)
                 commit('setLoading', false)
             } catch (error) {
@@ -66,7 +67,9 @@ export default {
                     payload.postContent,
                     payload.description,
                     getters.user.id,
-                    null);
+                    null,
+                    null
+                    );
                 const post = await firebase.database().ref('posts').push(newPost);
                 
                 commit('savePost', newPost);
@@ -82,13 +85,13 @@ export default {
             commit('setLoading', true)
             try {
                 //logic
-                console.log('start update')
                 const updatedPost = new Post(
                     payload.postName,
                     payload.postContent,
                     payload.description,
                     getters.user.id,
-                    null
+                    null,
+                    payload.url
                     );
                  await firebase.database().ref('posts/'+payload.id).update(
                     updatedPost

@@ -41,7 +41,6 @@ export default {
           this.$router.push("/user");
         })
         .catch((err) => {
-          console.log(err);
           this.submitStatus = err;
         });
     },
