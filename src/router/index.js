@@ -17,8 +17,9 @@ Vue.use(VueRouter)
     component: Home
   },
   {
-    path: '/postEdit',
+    path: '/postEdit/:id',
     name: 'postEdit',
+    props: true,
     component: PostEdit
   },
   {
@@ -30,20 +31,21 @@ Vue.use(VueRouter)
   {
     path: '/Registration',
     name: 'Registration',
-    component: Registration
+    component: Registration,
   },
    {
     path: '/authorization',
     name: 'authorization',
-    component: Authorization
+    component: Authorization,
+
   },
   {
     path: '/user',
     name: 'user',
     component: User,
-    beforeEnter(to, from, next){
-      store.getters.checkUser ? next() : next('/authorization');
-    }
+    // beforeEnter(to, from, next){
+    //   store.getters.checkUser ? next() : next('/authorization');
+    // }
   },
   
   {

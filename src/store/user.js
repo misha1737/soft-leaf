@@ -50,8 +50,12 @@ export default{
                 throw error
             }
         },
-        loggedUser({commit}, payload){
-             commit('setUser', new User(payload.uid)) ;  
+        async loggedUser({commit}, payload){
+    
+                const userInfo= await (await firebase.database().ref('users/'+payload.uid).once('value')).val();
+                commit('setUser', new User(payload.uid,userInfo.name,userInfo.moderator,userInfo.admin ))
+
+            
         },
         logoutUser({commit}){
                 firebase.auth().signOut();
@@ -64,6 +68,12 @@ export default{
         },
         checkUser (state) {
             return state.user !== null
+        },
+        isUserAdmin (state) {
+            return (state.user !== null && state.user.admin)
+        },
+        isUserModerator (state) {
+            return (state.user !== null && state.user.moderator)
         }
     }
 }
