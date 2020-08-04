@@ -27,6 +27,7 @@ new Vue({
       messagingSenderId: "820675737205",
       appId: "1:820675737205:web:6c383a836505b625c6aa3c"
     };
+
     firestore.initializeApp(firebaseConfig);
     firestore.auth().onAuthStateChanged(user=>{
       if (user){
@@ -34,5 +35,7 @@ new Vue({
       }
       this.$store.dispatch('loadPosts');
     })
+    
+    
   }
 }).$mount('#app')

@@ -8,7 +8,7 @@
     <input v-model="password" id="password" type="password"  placeholder="Enter password"/>
     <button v-if="!loading" class="button" @click="submit()">SIGN IN</button>
     <button v-else class="button disabled">Loading...</button>
-    
+    <autorizationBlock/>
     <span
       class="errorMsg"
     >{{submitStatus}}</span>
@@ -16,7 +16,9 @@
 </template>
 
 <script>
+import autorizationBlock from "./../components/autorizationBlock.vue"
 export default {
+
   name: "MainContent",
   data() {
     return {
@@ -24,6 +26,9 @@ export default {
       password: "",
       submitStatus: null,
     };
+  },
+   components: {
+    autorizationBlock,
   },
   validations:{
 
