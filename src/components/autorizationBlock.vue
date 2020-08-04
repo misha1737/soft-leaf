@@ -2,6 +2,7 @@
   <div class="authBlock">
      
       <div @click="googleSignin()">G</div>
+      <div @click="facebookSignin()">F</div>
   </div>
 </template>
 <script>
@@ -25,8 +26,19 @@ export default {
             console.log('loginUserGoogle+');
         })
         .catch((err) => {
-            console.log('loginUserGoogle-');
-          this.submitStatus = err;
+            console.log('loginUserGoogle-'+err);
+          
+        });
+    },
+    facebookSignin(){
+          this.$store
+        .dispatch("loginUserfacebook")
+        .then(() => {
+            console.log('loginUserfacebook+');
+        })
+        .catch((err) => {
+            console.log('loginUserfacebook-'+err);
+          
         });
     }
   },

@@ -68,6 +68,26 @@ export default{
 
               });
         },
+        loginUserfacebook({commit}){
+            let provider = new firebase.auth.FacebookAuthProvider();
+            firebase.auth().signInWithPopup(provider).then(async result=> {
+                  let user = result.user;
+                  console.log(user.displayName);
+                  console.log(user.photoURL);
+                  console.log(user.uid);
+                 await firebase.database().ref('users/'+user.uid+'/name').set(user.displayName);
+                  commit('setUser', new User(user.uid,user.displayName,null,null));
+                  commit('setLoading',false)
+
+              }).catch(function(error) {
+                  // Handle Errors here.
+                  commit('setLoading',false);
+                  commit('setError', error.message);
+                  console.log(error.message);
+                  throw error
+
+              });
+        },
         async loggedUser({commit}, payload){
                 const userInfo= await (await firebase.database().ref('users/'+payload.uid).once('value')).val();
                 commit('setUser', new User(payload.uid,userInfo.name,userInfo.moderator,userInfo.admin ))
