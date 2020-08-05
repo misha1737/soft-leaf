@@ -1,5 +1,6 @@
 <template>
   <div class="form">
+    <h6 v-if="id!=0" @click="removePost()">remove post</h6>
     <p v-if="id==0" class="title">Create Post</p>
     <p v-else class="title">Post edit</p>
     <label for="postName">Post Name</label>
@@ -79,6 +80,19 @@ export default {
 components: { VueEditor },
   validations: {},
   methods: {
+    removePost(){
+         this.$store
+          .dispatch("removePost", this.id)
+          .then(() => {
+            this.submitStatus = "OK";
+            this.$store.dispatch("loadPosts");
+            this.$router.push("/");
+          })
+          .catch((err) => {
+            console.log(err);
+            this.submitStatus = err;
+          });
+    },
     previewImage(event) {
       this.uploadValue = 0;
       this.picture = null;

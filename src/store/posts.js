@@ -80,6 +80,22 @@ export default {
                 throw error
             }
         },
+        async removePost ({ commit, getters }, payload) {
+            commit('clearError')
+            commit('setLoading', true)
+            try {
+                //logic
+                await firebase.database().ref('posts/'+payload).remove();
+                commit('setLoading', false);
+            } catch (error) {
+                commit('setLoading', false);
+                commit('setError', error.message);
+                throw error
+            }
+
+            
+        },
+
         async updatePost({ commit, getters }, payload) {
             commit('clearError')
             commit('setLoading', true)
