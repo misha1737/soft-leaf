@@ -1,6 +1,7 @@
 <template>
   <div class="form">
-    <h6 v-if="id!=0" @click="removePost()">remove post</h6>
+    <modal v-if="modalOpen" :text="'Delete post?'" v-on:reply='removePost'></modal>
+    <h6 v-if="id!=0" @click="modalOpen=true">remove post</h6>
     <p v-if="id==0" class="title">Create Post</p>
     <p v-else class="title">Post edit</p>
     <label for="postName">Post Name</label>
@@ -57,7 +58,7 @@
 <script>
 import firestore from "firebase/app";
 import { VueEditor } from "vue2-editor";
-
+import modal from "./../components/Modal.vue";
 export default {
   name: "MainContent",
 
@@ -67,7 +68,7 @@ export default {
       postContent: "",
       description: "",
       submitStatus: null,
-
+      modalOpen:false,
       //upl img
       imageData: null,
       picture: null,
@@ -77,10 +78,15 @@ export default {
   props: {
     id: String,
   },
-components: { VueEditor },
+components: { VueEditor, modal },
   validations: {},
   methods: {
-    removePost(){
+    
+    removePost(result){
+      if(!result) {
+        this.modalOpen=false;
+        return
+      }
          this.$store
           .dispatch("removePost", this.id)
           .then(() => {
