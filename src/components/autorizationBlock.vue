@@ -6,11 +6,6 @@
   </div>
 </template>
 <script>
-import firestore from 'firebase/app'
-import 'firebase/auth'
-import 'firebase/database'
-import 'firebase/messaging'
-import 'firebase/storage'
 export default {
   name: "Header",
   data() {
@@ -51,5 +46,5 @@ export default {
 };
 </script>
 <style lang="scss">
-@import "./../scss/_header.scss";
+
 </style>

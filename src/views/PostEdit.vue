@@ -184,7 +184,6 @@ components: { VueEditor, modal },
       return this.$store.getters.loading;
     },
     post() {
-      console.log('computed');
       return this.$store.getters.post(this.id);
     },
   },

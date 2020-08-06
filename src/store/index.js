@@ -3,6 +3,7 @@ import Vuex from 'vuex'
 import common from './common'
 import user from './user'
 import post from './posts'
+import comments from './comments'
 Vue.use(Vuex)
 
 export default new Vuex.Store({
@@ -15,6 +16,7 @@ export default new Vuex.Store({
   modules: {
     common,
     user,
-    post
+    post,
+    comments
   }
 })

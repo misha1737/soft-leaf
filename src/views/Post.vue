@@ -10,10 +10,15 @@
       <h2>{{post.description}}</h2>
       <span v-html="post.postContent"></span>
   </article>
+ 
+  <CommentsBlock :id="id">
+
+  </CommentsBlock>
   </div>
 </template>
 
 <script>
+import CommentsBlock from "./../components/CommentsBlock.vue"
 export default {
   name: "Home",
   data() {
@@ -22,7 +27,9 @@ export default {
   props: {
     id: String,
   },
-
+components: {
+     CommentsBlock,
+  },
   computed: {
     post() {
       return this.$store.getters.post(this.id);
@@ -31,6 +38,9 @@ export default {
       return this.$store.getters.isUserAdmin;
     }
   },
+  mounted(){
+ this.$store.dispatch('loadComments', {id:this.id});
+  }
 };
 </script>
 
