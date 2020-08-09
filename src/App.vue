@@ -3,13 +3,15 @@
     <div id="nav">
       <Header>
       </Header>
-
+      <AdminPanel v-if="isUserAdmin"></AdminPanel>
+    
     </div>
     <router-view/>
   </div>
 </template>
 <script>
 import Header from './components/Header.vue'
+import AdminPanel from './components/AdminPanel.vue'
 export default {
   name: 'app',
      data(){
@@ -19,7 +21,13 @@ export default {
         },
   components: {
     Header,
+    AdminPanel
   },
+   computed: {
+  isUserAdmin(){
+      return this.$store.getters.isUserAdmin;
+    }
+   }
 }
 
 </script>
