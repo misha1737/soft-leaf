@@ -42,7 +42,9 @@ export default {
                             p.description,
                             p.userId,
                             key,
-                            p.url
+                            p.url,
+                            p.category,
+                            p.publish
                         )
                     ) 
                 })
@@ -68,7 +70,9 @@ export default {
                     payload.description,
                     getters.user.id,
                     null,
-                    null
+                    null,
+                    payload.category,
+                    payload.publish
                     );
                 const post = await firebase.database().ref('posts').push(newPost);
                 
@@ -107,7 +111,9 @@ export default {
                     payload.description,
                     getters.user.id,
                     null,
-                    payload.url
+                    payload.url,
+                    payload.category,
+                    payload.publish
                     );
                  await firebase.database().ref('posts/'+payload.id).update(
                     updatedPost
@@ -126,8 +132,13 @@ export default {
     },
 
     getters: {
-        posts: state=>{
+        AllPosts: state=>{
             return state.posts
+        },
+        posts: state=>filter=>{
+            return state.posts.filter(item=>{
+               return item.category === filter
+            })
         },
         post: state=>id=>{
             return state.posts.find(state => state.id === id);

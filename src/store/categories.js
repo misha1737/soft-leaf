@@ -119,8 +119,8 @@ export default {
 
             return state.categories
         },
-        // post: state=>id=>{
-        //     return state.posts.find(state => state.id === id);
-        // },
+        categoryId: state=>name=>{
+             return state.categories.find(state => state.categoryName === name);
+         },
     }
 }

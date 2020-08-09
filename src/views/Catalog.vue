@@ -19,13 +19,26 @@
 export default {
   name: "Home",
   data() {
-    return {};
+    return {
+    };
   },
-
+  props:{
+    id: String
+  },
   computed: {
-    posts() {
-      return this.$store.getters.posts;
+     category() {
+      return this.$store.getters.categoryId(this.id);
     },
+    posts() {
+      // return this.$store.getters.AllPosts;
+      if(this.id && this.category){
+      return this.$store.getters.posts(this.category.id);
+      }else{
+        
+       return  this.$store.getters.AllPosts
+      }
+    },
+
   },
 };
 </script>

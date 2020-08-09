@@ -12,9 +12,22 @@ import SiteMenuSetup from '../views/SiteMenuSetup.vue'
 Vue.use(VueRouter)
 
   const routes = [
+    {
+      path: '/',
+      name: 'Catalog',
+      props: true,
+      component: Catalog
+    },
+    {
+      path: '/catalog/',
+      name: 'Catalog',
+      props: true,
+      component: Catalog
+    },
   {
     path: '/catalog/:id',
     name: 'Catalog',
+    props: true,
     component: Catalog
   },
   {

@@ -34,18 +34,16 @@
     </div>
 
     <label for="contactChoice1">Draft</label>
-    <input type="radio" id="contactChoice1" name="contact" value="email" checked />
+    <input v-model="publish" type="radio" id="contactChoice1" name="contact" :value='false' checked/>
 
     <label for="contactChoice2">Publish</label>
-    <input type="radio" id="contactChoice2" name="contact" value="phone" />
+    <input v-model="publish" type="radio" id="contactChoice2" name="contact" :value='true' />
 
-    <select size="1" name="hero[]">
-      <option selected disabled>Select category</option>
-      <option value="Чебурашка">Health</option>
-      <option value="Крокодил Гена">food</option>
-      <option value="Шапокляк">sex</option>
-      <option value="Крыса Лариса">psychology</option>
-      <option value="Sports and beauty">Sports and beauty</option>
+    <select v-model="category" size="1" name="hero[]">
+       <option :value="null" selected disabled>Select category</option>
+      <option :value="category.id" v-for="category in categories" :key="category.id" >
+        {{category.categoryName}}
+      </option>
     </select>
 
     <button v-if="!loading" class="button" @click="submit()">save</button>
@@ -73,7 +71,9 @@ export default {
       imageData: null,
       picture: null,
       uploadValue: 0,
-      oldImgUrl:""
+      oldImgUrl:"",
+      category:null,
+      publish:false
     };
   },
   props: {
@@ -145,7 +145,9 @@ components: { VueEditor, modal },
         postContent: this.postContent,
         description: this.description,
         id: this.id == 0 ? null : this.id,
-        url: this.picture
+        url: this.picture,
+        category: this.category,
+        publish: this.publish
       };
       //delete old img
     
@@ -185,11 +187,15 @@ components: { VueEditor, modal },
         this.postContent = this.post.postContent;
         this.description = this.post.description;
         this.picture = this.post.url;
+        this.category = this.post.category;
+        this.publish = this.post.publish;
       } else {
         this.postName = "";
         this.postContent = "";
         this.description = "";
         this.picture = "";
+        this.category = null;
+        this.publish = false;
       }
     },
   computed: {
@@ -199,6 +205,9 @@ components: { VueEditor, modal },
     post() {
       return this.$store.getters.post(this.id);
     },
+     categories() {
+      return this.$store.getters.categories;
+    }
   },
   watch: {
     id: function (val) {
@@ -207,11 +216,15 @@ components: { VueEditor, modal },
         this.postContent = this.post.postContent;
         this.description = this.post.description;
         this.picture = this.post.url;
+        this.category = this.post.category;
+        this.publish = this.post.publish;
       } else {
         this.postName = "";
         this.postContent = "";
         this.description = "";
         this.picture = "";
+        this.category = null;
+        this.publish = false;
       }
     },
     post: function (val) {
@@ -220,11 +233,15 @@ components: { VueEditor, modal },
               this.postContent = this.post.postContent;
               this.description = this.post.description;
               this.picture = this.post.url;
+              this.category = this.post.category;
+              this.publish = this.post.publish;
             } else {
               this.postName = "";
               this.postContent = "";
               this.description = "";
               this.picture = "";
+              this.category = null
+              this.publish = false;
             }
     }
   },
