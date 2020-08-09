@@ -30,7 +30,7 @@
         <br />
       </div>
       <input type="file" @change="previewImage" accept="image/" />
-      <button @click="uploadImg()">Upload</button>
+     
     </div>
 
     <label for="contactChoice1">Draft</label>
@@ -73,6 +73,7 @@ export default {
       imageData: null,
       picture: null,
       uploadValue: 0,
+      oldImgUrl:""
     };
   },
   props: {
@@ -101,23 +102,31 @@ components: { VueEditor, modal },
     },
     previewImage(event) {
       this.uploadValue = 0;
+      this.oldImgUrl = this.picture;
       this.picture = null;
       this.imageData = event.target.files[0];
+      this.uploadImg();
     },
     uploadImg() {
       if(this.id==0){
         return
       }
+
+
+      if(this.picture!= this.oldImgUrl){
+        firestore.storage().ref('posts/').child(`${this.id}`).listAll().then(function(result){
+     result.items.forEach(item=>{
+       firestore.storage().ref(item.location.path_).delete();
+     })
+      })
+      }
+
+
+
       this.picture = null;
-      const storageRef = firestore
-        .storage()
-        .ref(`posts/${this.id}/${this.imageData.name}`)
-        .put(this.imageData);
-      storageRef.on(
-        "state_changed",
-        (snapshot) => {
-          this.uploadValue =
-            (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+      const storageRef = firestore.storage().ref(`posts/${this.id}/${this.imageData.name}`).put(this.imageData);
+      storageRef.on("state_changed",(snapshot) => {
+          this.uploadValue = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
         },
         (error) => {
           console.log(error.message);
@@ -138,6 +147,10 @@ components: { VueEditor, modal },
         id: this.id == 0 ? null : this.id,
         url: this.picture
       };
+      //delete old img
+    
+
+      
       //for create post
       if (this.id == 0) {
         this.$store
@@ -167,7 +180,7 @@ components: { VueEditor, modal },
     
   },
   mounted(){
-          if (this.post && this.id != 0) {
+        if (this.post && this.id != 0) {
         this.postName = this.post.postName;
         this.postContent = this.post.postContent;
         this.description = this.post.description;
