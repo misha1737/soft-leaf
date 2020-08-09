@@ -34,6 +34,7 @@ new Vue({
         this.$store.dispatch('loggedUser',user);
       }
       this.$store.dispatch('loadPosts');
+      this.$store.dispatch('loadCategories');
     })
     
     

@@ -8,8 +8,8 @@
 
     
     <ul>
-      <li v-for="link in linkMenu" :key="link.title">
-        <router-link :to="link.url">{{link.title}}</router-link>
+      <li v-for="link in categories" :key="link.id">
+        <router-link :to="'/catalog/'+link.categoryName">{{link.categoryName}}</router-link>
       </li>
     </ul>
     
@@ -40,19 +40,22 @@ export default {
     user(){
       return this.$store.getters.user;
     },
-    linkMenu() {
-      if (this.checkUser) {
-        return [
-          { title: "Home", url: "/" },
-          { title: "About", url: "/about" },
-          { title: "User", url: "/user" },
-        ];
-      }
-      return [
-        { title: "Home", url: "/" },
-       { title: "About", url: "/about" },
-      ];
+    categories() {
+      return this.$store.getters.categories;
     },
+    // linkMenu() {
+    //   if (this.checkUser) {
+    //     return [
+    //       { title: "Home", url: "/" },
+    //       { title: "About", url: "/about" },
+    //       { title: "User", url: "/user" },
+    //     ];
+    //   }
+    //   return [
+    //     { title: "Home", url: "/" },
+    //    { title: "About", url: "/about" },
+    //   ];
+    // },
   },
 };
 </script>

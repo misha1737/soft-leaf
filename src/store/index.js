@@ -4,6 +4,7 @@ import common from './common'
 import user from './user'
 import post from './posts'
 import comments from './comments'
+import categories from './categories'
 Vue.use(Vuex)
 
 export default new Vuex.Store({
@@ -17,6 +18,7 @@ export default new Vuex.Store({
     common,
     user,
     post,
-    comments
+    comments,
+    categories
   }
 })

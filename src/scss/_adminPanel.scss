@@ -1,6 +1,7 @@
 .AdminPanel{
     background:$brandColorDark;
     z-index:100;
+    transition:0.5s;
     &.top{
         position:fixed;
         left:0;

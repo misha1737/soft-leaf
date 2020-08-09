@@ -2,18 +2,20 @@ import Vue from 'vue'
 import VueRouter from 'vue-router'
 import Registration from '../views/Registration.vue'
 import Authorization from '../views/Authorization.vue'
-import  Home from '../views/Home.vue'
+import Catalog from '../views/Catalog.vue'
 import User from '../views/User.vue'
 import PostEdit from '../views/PostEdit.vue'
 import Post from '../views/Post.vue'
+import SiteMenuSetup from '../views/SiteMenuSetup.vue'
+
 
 Vue.use(VueRouter)
 
   const routes = [
   {
-    path: '/',
-    name: 'Home',
-    component: Home
+    path: '/catalog/:id',
+    name: 'Catalog',
+    component: Catalog
   },
   {
     path: '/postEdit/:id',
@@ -36,6 +38,12 @@ Vue.use(VueRouter)
     path: '/authorization',
     name: 'authorization',
     component: Authorization,
+
+  },
+  {
+    path: '/siteMenuSetup',
+    name: 'siteMenuSetup',
+    component: SiteMenuSetup,
 
   },
   {
