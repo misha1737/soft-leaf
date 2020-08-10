@@ -13,17 +13,16 @@
         <button v-else class="button disabled">Loading...</button>
       </div>
       <ul>
-        <li v-for="category in categories" :key="category.id">
-          up down {{category.categoryName}}
-
-           <span @click="deleteCatrgory(category.id)">X</span> 
-           </li>
+      
+           <list :items="categories" @deleteItem="deleteCatrgory"></list> 
       </ul>
     </div>
   </div>
 </template>
 <script>
+import list from "./../components/list.vue"
 export default {
+  
   name: "SiteMenuSetup",
   data() {
     return {
@@ -33,7 +32,9 @@ export default {
   props: {
     text: String
   },
-
+  components:{
+    list
+  },
   methods: {
     addCategory() {
       this.$store

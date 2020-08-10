@@ -75,7 +75,7 @@ export default {
             commit('setLoading', true)
             try {
                 //logic
-                console.log(payload.id);
+                
                 await firebase.database().ref('categories/' + payload.id).remove();
                 commit('setLoading', false);
             } catch (error) {
