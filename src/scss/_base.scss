@@ -111,9 +111,17 @@ h1, h2, h3, h4, h5, h6{
     font-weight: bold;
     font-size:14px;
     transition: 0.5s;
+    color:black;  
     cursor: pointer;
     &:hover{
         background:$brandColorDark;  
         color:white;
+    }
+    &.disabled{
+        background:$grey ;
+        &:hover{
+            background:$grey ;
+            color:black;  
+        }
     }
 }

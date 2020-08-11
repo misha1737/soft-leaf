@@ -17,7 +17,7 @@ export default {
 
     },
     actions: {
-        async loadCategories({ commit }, payload) {
+        async loadCategories({ commit }) {
             commit('clearError')
             commit('setLoading', true)
             try {
@@ -28,12 +28,15 @@ export default {
 
                     Object.keys(categories).forEach(key => {
                         const p = categories[key]
+                        let id;
+                        p.id? id=p.id : id=key
                         categoriesArray.push(
                             new Category(
                                 p.categoryName,
-                                key,
+                                id,
                             )
                         )
+             
                     })
                 commit('loadCategories', categoriesArray)
                 }else{
@@ -51,18 +54,25 @@ export default {
         },
 
 
-        async saveCategories({ commit, getters }, payload) {
+        async saveCategories({ commit,state}) {
             commit('clearError')
             commit('setLoading', true)
             try {
                 //logic
-                const newCategory = new Category(
-                    payload.categoryName,
-                    null
-                );
-                const category = await firebase.database().ref('categories').push(newCategory);
+             
 
-                //commit('saveCategories', category);
+                 await firebase.database().ref('categories/').remove();
+                
+                 state.categories.forEach(async item=>{
+                    await state.categories
+                    let newCategory = new Category(
+                        item.categoryName,
+                        item.id
+                             );
+                          
+                             firebase.database().ref('categories/').push(newCategory);
+                            })
+             
                 commit('setLoading', false)
             } catch (error) {
                 commit('setLoading', false)
@@ -85,28 +95,20 @@ export default {
             }
         },
 
-        async updateCategories({ commit, getters }, payload) {
-            // commit('clearError')
-            // commit('setLoading', true)
-            // try {
-            //     //logic
-            //     const updatedPost = new Post(
-            //         payload.postName,
-            //         payload.postContent,
-            //         payload.description,
-            //         getters.user.id,
-            //         null,
-            //         payload.url
-            //         );
-            //      await firebase.database().ref('posts/'+payload.id).update(
-            //         updatedPost
-            //     );
-            //     commit('setLoading', false)
-            // } catch (error) {
-            //     commit('setLoading', false)
-            //     commit('setError', error.message)
-            //     throw error
-            // }
+        async updateAllCategories({ commit }, payload) {
+             commit('clearError')
+             commit('setLoading', true)
+            try {
+                //logic
+                 await firebase.database().ref('posts/'+payload.id).update(
+                    payload
+                );
+                commit('setLoading', false)
+            } catch (error) {
+                commit('setLoading', false)
+                commit('setError', error.message)
+                throw error
+            }
         },
 
 
