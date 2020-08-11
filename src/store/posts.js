@@ -64,6 +64,7 @@ export default {
             commit('setLoading', true)
             try {
                 //logic
+                
                 const newPost = new Post(
                     payload.postName,
                     payload.postContent,

@@ -38,7 +38,7 @@
 
     <label for="contactChoice2">Publish</label>
     <input v-model="publish" type="radio" id="contactChoice2" name="contact" :value='true' />
-
+{{categories}}
     <select v-model="category" size="1" name="hero[]">
        <option :value="null" selected disabled>Select category</option>
       <option :value="category.id" v-for="category in categories" :key="category.id" >
@@ -145,7 +145,7 @@ components: { VueEditor, modal },
         postContent: this.postContent,
         description: this.description,
         id: this.id == 0 ? null : this.id,
-        url: this.picture,
+        url: this.picture ? this.picture : null,
         category: this.category,
         publish: this.publish
       };

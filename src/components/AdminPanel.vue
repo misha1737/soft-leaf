@@ -3,6 +3,9 @@
     <router-link to="/postEdit/0">
       <div class="component">Create Post</div>
     </router-link>
+    <router-link to="/postList">
+      <div class="component">Edit Posts</div>
+    </router-link>
     <router-link to="/siteMenuSetup">
       <div class="component">Site menu</div>
     </router-link>

@@ -7,7 +7,7 @@ import User from '../views/User.vue'
 import PostEdit from '../views/PostEdit.vue'
 import Post from '../views/Post.vue'
 import SiteMenuSetup from '../views/SiteMenuSetup.vue'
-
+import PostList from '../views/PostList.vue'
 
 Vue.use(VueRouter)
 
@@ -35,6 +35,11 @@ Vue.use(VueRouter)
     name: 'postEdit',
     props: true,
     component: PostEdit
+  },
+  {
+    path: '/postList/',
+    name: 'postList',
+    component: PostList
   },
   {
         path: '/post/:id',
