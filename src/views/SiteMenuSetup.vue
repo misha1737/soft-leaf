@@ -13,8 +13,9 @@
       </div>
       <ul>
         <draggable v-model="categories" group="people" @start="drag=true" @end="drag=false">
-          <div v-for="category in categories" :key="category.id">
-            {{category.categoryName}}
+          <div v-for="(category, index) in categories" :key="category.id">
+            <span v-if="selected!=category.id" @click="selected=category.id">{{category.categoryName}}</span>
+            <input v-else v-model="categories[index].categoryName" type="text">
             <span @click=" deleteCatrgory(category.categoryName)">X</span>
           </div>
         </draggable>
@@ -32,7 +33,8 @@ export default {
   data() {
     return {
       categoryName: "",
-      state:""
+      state:"",
+      selected:""
     };
   },
   props: {
