@@ -29,9 +29,15 @@ export default {
             commit('clearError')
             commit('setLoading', true)
             try {
-                const post= await firebase.database().ref('posts').once('value');
+                //const post= await firebase.database().ref('posts').once('value')
+               // const post= await firebase.database().ref('posts').orderByKey().limitToFirst(2).once('value')
+             // const post= await firebase.database().ref('posts').orderByKey().limitToFirst(2).once('value')
+             //const post= await firebase.database().ref('posts').orderByChild('postName').equalTo('new post').once('value')
+             const post= await firebase.database().ref('posts').orderByChild('time').startAt(1).limitToLast(10).once('value')
+             console.log(post);
                 const posts =  post.val();
-                const postsArray = [];
+               console.log(posts)
+                let postsArray = [];
 
                 Object.keys(posts).forEach(key=>{
                     const p = posts[key]
@@ -49,7 +55,7 @@ export default {
                         )
                     ) 
                 })
-               
+                postsArray= postsArray.sort((a, b) => a.time < b.time ? 1 : -1)
                 commit('loadPosts', postsArray)
                 commit('setLoading', false)
             } catch (error) {
