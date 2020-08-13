@@ -3,12 +3,12 @@
     <p class="title">This is a Home page</p>
     <div  v-for="post in posts" :key="post.id">
       <router-link class="postPreview" :to="'/post/'+post.id">
-     
         <img v-if="post.url" class="postPreview__img" :src="post.url" alt /> 
         <img v-else class="postPreview__img" src="./../assets/post.jpg" alt />
         <div class="postPreview__text">
           <h2>{{post.postName}}</h2>
           <h3>{{post.description}}</h3>
+          <h6>{{formatTime(post.time)}}</h6>
         </div>
       </router-link>
     </div>
@@ -24,6 +24,12 @@ export default {
   },
   props:{
     id: String
+  },
+  methods:{
+    formatTime(time){
+let t =  new Date(time);
+  return t.toLocaleString()
+    }
   },
   computed: {
      category() {

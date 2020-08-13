@@ -1,5 +1,5 @@
 export default class post{
-    constructor (postName, postContent, description, userId, id, url, category,publish){
+    constructor (postName, postContent, description, userId, id, url, category,publish,time){
         this.postName=postName;
         this.postContent=postContent;
         this.description=description;
@@ -8,5 +8,6 @@ export default class post{
         this.url=url;
         this.category=category;
         this.publish=publish;
+        this.time=time;
     }
 }

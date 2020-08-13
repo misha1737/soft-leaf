@@ -44,7 +44,8 @@ export default {
                             key,
                             p.url,
                             p.category,
-                            p.publish
+                            p.publish,
+                            p.time
                         )
                     ) 
                 })
@@ -73,7 +74,8 @@ export default {
                     null,
                     null,
                     payload.category,
-                    payload.publish
+                    payload.publish,
+                    firebase.database.ServerValue.TIMESTAMP
                     );
                 const post = await firebase.database().ref('posts').push(newPost);
                 
@@ -114,7 +116,8 @@ export default {
                     null,
                     payload.url,
                     payload.category,
-                    payload.publish
+                    payload.publish,
+                    firebase.database.ServerValue.TIMESTAMP
                     );
                  await firebase.database().ref('posts/'+payload.id).update(
                     updatedPost

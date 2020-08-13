@@ -2,7 +2,9 @@
   <div class="contentBlock">
     <article class="post" v-if="post">
       <h1>{{post.postName}}</h1>
+      <h6>{{formatTime(post.time)}}</h6>
       <div v-if="isUserModerator" class="isUserModerator">
+
         <router-link  :to="'/postEdit/'+id">edit</router-link>
       </div>
       <img v-if="post.url" class="post__img" :src="post.url" :alt="post.postName" />
@@ -29,6 +31,12 @@ export default {
   },
 components: {
      CommentsBlock,
+  },
+    methods:{
+    formatTime(time){
+let t =  new Date(time);
+  return t.toLocaleString()
+    }
   },
   computed: {
     post() {
