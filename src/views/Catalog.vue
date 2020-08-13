@@ -12,6 +12,7 @@
         </div>
       </router-link>
     </div>
+    <button class="button" @click="loadMore()">loadMore</button>
   </div>
 </template>
 
@@ -29,6 +30,9 @@ export default {
     formatTime(time){
 let t =  new Date(time);
   return t.toLocaleString()
+    },
+    loadMore(){
+       this.$store.dispatch('loadPosts');
     }
   },
   computed: {
@@ -40,7 +44,7 @@ let t =  new Date(time);
       if(this.id && this.category){
       return this.$store.getters.posts(this.category.id);
       }else{
-        
+       
        return  this.$store.getters.AllPosts
       }
     },

@@ -10,11 +10,17 @@ export default {
             userId: null,
             id: null
         },
+        timeInLastPost:null,
         posts:[]
     },
     mutations: {
         loadPosts(state, payload){
-            state.posts = payload;
+            
+            payload.forEach(key=>{
+                state.posts.push(key)
+            });
+            state.timeInLastPost = payload[payload.length-1].time;
+            state.posts.pop();
         },
         savePost(state, payload) {
             state.newPost = payload;
@@ -25,7 +31,7 @@ export default {
     actions: {
       
 
-        async loadPosts({commit}, payload) {
+        async loadPosts({commit,getters}) {
             commit('clearError')
             commit('setLoading', true)
             try {
@@ -33,10 +39,13 @@ export default {
                // const post= await firebase.database().ref('posts').orderByKey().limitToFirst(2).once('value')
              // const post= await firebase.database().ref('posts').orderByKey().limitToFirst(2).once('value')
              //const post= await firebase.database().ref('posts').orderByChild('postName').equalTo('new post').once('value')
-             const post= await firebase.database().ref('posts').orderByChild('time').startAt(1).limitToLast(10).once('value')
-             console.log(post);
+             let post;
+             if (!getters.timeInLastPost)
+            post= await firebase.database().ref('posts').orderByChild('time').startAt(0).limitToLast(11).once('value')
+             else
+            post= await firebase.database().ref('posts').orderByChild('time').endAt(getters.timeInLastPost).limitToLast(11).once('value')
+
                 const posts =  post.val();
-               console.log(posts)
                 let postsArray = [];
 
                 Object.keys(posts).forEach(key=>{
@@ -55,6 +64,7 @@ export default {
                         )
                     ) 
                 })
+                
                 postsArray= postsArray.sort((a, b) => a.time < b.time ? 1 : -1)
                 commit('loadPosts', postsArray)
                 commit('setLoading', false)
@@ -152,6 +162,9 @@ export default {
         },
         post: state=>id=>{
             return state.posts.find(state => state.id === id);
+        },
+        timeInLastPost:state=>{
+            return state.timeInLastPost
         },
     }
 }
