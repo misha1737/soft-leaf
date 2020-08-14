@@ -18,7 +18,7 @@ export default {
          this.$store
         .dispatch("loginUserGoogle")
         .then(() => {
-            console.log('loginUserGoogle+');
+            this.$router.push("/");
         })
         .catch((err) => {
             console.log('loginUserGoogle-'+err);
@@ -28,7 +28,7 @@ export default {
           this.$store
         .dispatch("loginUserfacebook")
         .then(() => {
-            console.log('loginUserfacebook+');
+            this.$router.push("/");
         })
         .catch((err) => {
             console.log('loginUserfacebook-'+err);

@@ -6,9 +6,12 @@
     <input v-model="email" id="email" type="email"  placeholder="Enter E-mail" />
     <label for="password">Password</label>
     <input v-model="password" id="password" type="password"  placeholder="Enter password"/>
+    <div class="authorizationButtons">
+    
+    <autorizationBlock/>
     <button v-if="!loading" class="button" @click="submit()">SIGN IN</button>
     <button v-else class="button disabled">Loading...</button>
-    <autorizationBlock/>
+    </div>
     <span
       class="errorMsg"
     >{{submitStatus}}</span>
@@ -16,7 +19,7 @@
 </template>
 
 <script>
-import autorizationBlock from "./../components/autorizationBlock.vue"
+import autorizationBlock from "./../components/AutorizationBlock.vue"
 export default {
 
   name: "MainContent",

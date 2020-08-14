@@ -25,7 +25,7 @@
   </div>
 </template>
 <script>
-import autorizationBlock from "./../components/autorizationBlock.vue";
+import autorizationBlock from "./../components/AutorizationBlock.vue"
 export default {
   name: "commentsBlock",
   data() {

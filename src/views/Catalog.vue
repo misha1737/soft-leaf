@@ -1,6 +1,5 @@
 <template>
   <div class="posts contentBlock">
-    <p class="title">This is a Home page</p>
     <div  v-for="post in posts" :key="post.id">
       <router-link class="postPreview" :to="'/post/'+post.id">
         <img v-if="post.url" class="postPreview__img" :src="post.url" alt /> 

@@ -1,7 +1,7 @@
 <template>
   <div class="contentBlock">
-    <div class="SiteMenuSetup">
-      <div>
+    <div class="SiteMenuSetup ">
+      <div class="form">
         <label for="newCategory">New Category</label>
         <input
           v-model="categoryName"
@@ -11,12 +11,12 @@
         />
         <button :class="{disabled: categoryName.length<1}" class="button" @click="addCategory()">Add Category</button>
       </div>
-      <ul>
+      <ul class="dragList">
         <draggable v-model="categories" group="people" @start="drag=true" @end="drag=false">
-          <div v-for="(category, index) in categories" :key="category.id">
-            <span v-if="selected!=category.id" @click="selected=category.id">{{category.categoryName}}</span>
-            <input v-else v-model="categories[index].categoryName" type="text">
-            <span @click=" deleteCatrgory(category.categoryName)">X</span>
+          <div class="dragElement" v-for="(category, index) in categories" :key="category.id">
+    
+            <input v-model="categories[index].categoryName" type="text">
+            <span @click=" deleteCatrgory(category.categoryName)"><span class="removeIcon"></span></span>
           </div>
         </draggable>
       </ul>
@@ -34,7 +34,6 @@ export default {
     return {
       categoryName: "",
       state:"",
-      selected:""
     };
   },
   props: {
