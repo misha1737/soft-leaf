@@ -3,7 +3,7 @@
     <div class="line"></div>
     <div v-if="checkUser">
       <div class="form">
-        <textarea v-model="newComment" id="description" placeholder="Enter description" resize: none></textarea>
+        <textarea v-model="newComment" id="description" placeholder="Enter description"></textarea>
         <button @click="saveComment()" class="button">send</button>
         {{submitStatus}}
       </div>

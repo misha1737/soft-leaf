@@ -4,8 +4,7 @@
       <h1>{{post.postName}}</h1>
       <h6>{{formatTime(post.time)}}</h6>
       <div v-if="isUserModerator" class="isUserModerator">
-
-        <router-link  :to="'/postEdit/'+id"> <span class="editIcon"></span>Edit post </router-link>
+        <router-link  :to="'/postEdit/'+id"> <div class="editButton"><span class="editIcon"></span>Edit post</div> </router-link>
       </div>
       <img v-if="post.url" class="post__img" :src="post.url" :alt="post.postName" />
       <img v-else class="post__img" src="./../assets/post.jpg" :alt="post.postName" />

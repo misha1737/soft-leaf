@@ -1,0 +1,25 @@
+.quillWrapper{
+    margin: 5px 0px;
+    .ql-toolbar.ql-snow{
+        border: 1px solid $brandColorWhite;
+        border-radius:5px 5px 0 0;
+    }
+
+    .ql-container.ql-snow{
+        border: 1px solid $brandColorWhite;
+        border-radius:0 0 5px 5px;
+        .ql-editor{
+            transition: 0.5s;
+            &:focus {
+                background-color: $brandColorWhite;
+              }
+        }
+    }
+    
+    &:focus {
+      background-color: $brandColorWhite;
+    }
+    &.invalid {
+      background-color: $error;
+    }
+}

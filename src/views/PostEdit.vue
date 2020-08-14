@@ -1,51 +1,55 @@
 <template>
-  <div class="form">
-    <modal v-if="modalOpen" :text="'Delete post?'" v-on:reply='removePost'></modal>
-    <h6 v-if="id!=0" @click="modalOpen=true">remove post</h6>
-    <p v-if="id==0" class="title">Create Post</p>
-    <p v-else class="title">Post edit</p>
+  <div class="contentBlock form">
+    <modal v-if="modalOpen" :text="'Delete post?'" v-on:reply="removePost"></modal>
+    <span v-if="id!=0" @click="modalOpen=true">
+      <div class="editButton">
+        <span class="removeIcon"></span>Remove post
+      </div>
+    </span>
+    <h1 v-if="id==0">Create Post</h1>
+    <h1 v-else>Post edit</h1>
     <label for="postName">Post Name</label>
-    <input v-model="postName"  id="postName" type="text" placeholder="Enter PostName" />
-
-    <label for="description">description</label>
-    <textarea v-model="description" id="description" placeholder="Enter description" />
-
-    <label for="postContent">post</label>
-
+    <input v-model="postName" id="postName" type="text" placeholder="Enter PostName" />
+    <label for="description">Description</label>
+    <textarea v-model="description" id="description" placeholder="Enter description"></textarea>
+    <label for="postContent">Post Content</label>
     <vue-editor v-model="postContent" />
-
-   
-
-    <div  :class="{disabled : id==0}" class="uploadImage " >
-      <div>
+    <div :class="{disabled : id==0}" class="uploadImage">
+      <div v-if="progress">
         <p>
           Progress: {{uploadValue.toFixed()+"%"}}
           <progress :value="uploadValue" max="100"></progress>
         </p>
       </div>
-
       <div>
-        
         <img class="preview" :src="picture" />
-        <br />
       </div>
-      <input type="file" @change="previewImage" accept="image/" />
-     
+      <input type="file" ref="inputFile" class="inputFile" @change="previewImage" accept="image/" />
+      <button class="button" @click="OpenFileSelect()">Upload picture</button>
     </div>
-
-    <label for="contactChoice1">Draft</label>
-    <input v-model="publish" type="radio" id="contactChoice1" name="contact" :value='false' checked/>
-
-    <label for="contactChoice2">Publish</label>
-    <input v-model="publish" type="radio" id="contactChoice2" name="contact" :value='true' />
-{{categories}}
+    <div class="choice">
+      <input
+        v-model="publish"
+        type="radio"
+        id="contactChoice1"
+        name="contact"
+        :value="false"
+        checked
+      />
+      <label for="contactChoice1">Draft</label>
+      <input v-model="publish" type="radio" id="contactChoice2" name="contact" :value="true" />
+      <label for="contactChoice2">Publish</label>
+    </div>
+    <div class="select">
     <select v-model="category" size="1" name="hero[]">
-       <option :value="null" selected disabled>Select category</option>
-      <option :value="category.id" v-for="category in categories" :key="category.id" >
-        {{category.categoryName}}
-      </option>
+      <option :value="null" selected disabled>Select category</option>
+      <option
+        :value="category.id"
+        v-for="category in categories"
+        :key="category.id"
+      >{{category.categoryName}}</option>
     </select>
-
+    </div>
     <button v-if="!loading" class="button" @click="submit()">save</button>
     <button v-else class="button disabled">Loading...</button>
 
@@ -66,67 +70,82 @@ export default {
       postContent: "",
       description: "",
       submitStatus: null,
-      modalOpen:false,
+      modalOpen: false,
       //upl img
       imageData: null,
       picture: null,
       uploadValue: 0,
-      oldImgUrl:"",
-      category:null,
-      publish:false
+      oldImgUrl: "",
+      category: null,
+      publish: false,
+      inputFile: this.$refs.inputFile,
+      progress: false,
     };
   },
   props: {
     id: String,
   },
-components: { VueEditor, modal },
+  components: { VueEditor, modal },
   validations: {},
   methods: {
-    
-    removePost(result){
-      if(!result) {
-        this.modalOpen=false;
-        return
+    removePost(result) {
+      if (!result) {
+        this.modalOpen = false;
+        return;
       }
-         this.$store
-          .dispatch("removePost", this.id)
-          .then(() => {
-            this.submitStatus = "OK";
-            this.$store.dispatch("loadPosts");
-            this.$router.push("/");
-          })
-          .catch((err) => {
-            console.log(err);
-            this.submitStatus = err;
-          });
+      this.$store
+        .dispatch("removePost", this.id)
+        .then(() => {
+          this.submitStatus = "OK";
+          this.$store.dispatch("loadPosts");
+          this.$router.push("/");
+        })
+        .catch((err) => {
+          console.log(err);
+          this.submitStatus = err;
+        });
     },
     previewImage(event) {
+      this.progress = true;
       this.uploadValue = 0;
       this.oldImgUrl = this.picture;
       this.picture = null;
       this.imageData = event.target.files[0];
       this.uploadImg();
     },
+    OpenFileSelect() {
+       if (this.id != 0) {
+      this.inputFile.click();
+       }
+    },
     uploadImg() {
-      if(this.id==0){
-        return
+      if (this.id == 0) {
+        return;
       }
 
-
-      if(this.picture!= this.oldImgUrl){
-        firestore.storage().ref('posts/').child(`${this.id}`).listAll().then(function(result){
-     result.items.forEach(item=>{
-       firestore.storage().ref(item.location.path_).delete();
-     })
-      })
+      if (this.picture != this.oldImgUrl) {
+        firestore
+          .storage()
+          .ref("posts/")
+          .child(`${this.id}`)
+          .listAll()
+          .then(function (result) {
+            result.items.forEach((item) => {
+              firestore.storage().ref(item.location.path_).delete();
+            });
+          });
       }
-
-
 
       this.picture = null;
-      const storageRef = firestore.storage().ref(`posts/${this.id}/${this.imageData.name}`).put(this.imageData);
-      storageRef.on("state_changed",(snapshot) => {
-          this.uploadValue = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+      const storageRef = firestore
+        .storage()
+        .ref(`posts/${this.id}/${this.imageData.name}`)
+        .put(this.imageData);
+      storageRef.on(
+        "state_changed",
+        (snapshot) => {
+          this.uploadValue =
+            (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
         },
         (error) => {
           console.log(error.message);
@@ -135,6 +154,7 @@ components: { VueEditor, modal },
           this.uploadValue = 100;
           storageRef.snapshot.ref.getDownloadURL().then((url) => {
             this.picture = url;
+            this.progress = false;
           });
         }
       );
@@ -147,12 +167,10 @@ components: { VueEditor, modal },
         id: this.id == 0 ? null : this.id,
         url: this.picture ? this.picture : null,
         category: this.category,
-        publish: this.publish
+        publish: this.publish,
       };
       //delete old img
-    
 
-      
       //for create post
       if (this.id == 0) {
         this.$store
@@ -179,25 +197,25 @@ components: { VueEditor, modal },
           });
       }
     },
-    
   },
-  mounted(){
-        if (this.post && this.id != 0) {
-        this.postName = this.post.postName;
-        this.postContent = this.post.postContent;
-        this.description = this.post.description;
-        this.picture = this.post.url;
-        this.category = this.post.category;
-        this.publish = this.post.publish;
-      } else {
-        this.postName = "";
-        this.postContent = "";
-        this.description = "";
-        this.picture = "";
-        this.category = null;
-        this.publish = false;
-      }
-    },
+  mounted() {
+    this.inputFile = this.$refs.inputFile;
+    if (this.post && this.id != 0) {
+      this.postName = this.post.postName;
+      this.postContent = this.post.postContent;
+      this.description = this.post.description;
+      this.picture = this.post.url;
+      this.category = this.post.category;
+      this.publish = this.post.publish;
+    } else {
+      this.postName = "";
+      this.postContent = "";
+      this.description = "";
+      this.picture = "";
+      this.category = null;
+      this.publish = false;
+    }
+  },
   computed: {
     loading() {
       return this.$store.getters.loading;
@@ -205,9 +223,9 @@ components: { VueEditor, modal },
     post() {
       return this.$store.getters.post(this.id);
     },
-     categories() {
+    categories() {
       return this.$store.getters.categories;
-    }
+    },
   },
   watch: {
     id: function (val) {
@@ -228,27 +246,28 @@ components: { VueEditor, modal },
       }
     },
     post: function (val) {
-        if (this.post && this.id != 0) {
-              this.postName = this.post.postName;
-              this.postContent = this.post.postContent;
-              this.description = this.post.description;
-              this.picture = this.post.url;
-              this.category = this.post.category;
-              this.publish = this.post.publish;
-            } else {
-              this.postName = "";
-              this.postContent = "";
-              this.description = "";
-              this.picture = "";
-              this.category = null
-              this.publish = false;
-            }
-    }
+      if (this.post && this.id != 0) {
+        this.postName = this.post.postName;
+        this.postContent = this.post.postContent;
+        this.description = this.post.description;
+        this.picture = this.post.url;
+        this.category = this.post.category;
+        this.publish = this.post.publish;
+      } else {
+        this.postName = "";
+        this.postContent = "";
+        this.description = "";
+        this.picture = "";
+        this.category = null;
+        this.publish = false;
+      }
+    },
   },
 };
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style lang="scss">
+@import "./../scss/components/_editText.scss";
 </style>
  
