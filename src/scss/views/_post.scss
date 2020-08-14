@@ -18,8 +18,11 @@
         line-height: 1.5;
         font-weight: normal;
     }
-}
-.commentsBlock{
-    clear: left;
-    width:100%;
+    .postContent{
+        a{
+            color:blue;
+            font-size: 21px;
+            text-decoration: revert;
+        }
+    }
 }

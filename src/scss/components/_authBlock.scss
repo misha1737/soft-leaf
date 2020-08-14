@@ -1,0 +1,24 @@
+.authBlock{
+    display:flex;
+    margin-bottom: 10px;
+    .icon{
+        cursor:pointer;
+        width:32px;
+        height:32px;
+        display:inline-block;
+        margin-right: 12px;;
+        background-size: cover;
+        opacity:0.8;
+        transition: 0.5s;
+        &:hover{
+            opacity:1;
+        }
+    }
+    &__googleIcon{
+      
+      background-image: url('./../assets/icons/google.svg');
+    }
+    &__facebookIcon{
+        background-image: url("./../assets/icons/facebook.svg");
+    }
+}

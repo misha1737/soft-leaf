@@ -5,12 +5,12 @@
       <h6>{{formatTime(post.time)}}</h6>
       <div v-if="isUserModerator" class="isUserModerator">
 
-        <router-link  :to="'/postEdit/'+id">edit</router-link>
+        <router-link  :to="'/postEdit/'+id"> <span class="editIcon"></span>Edit post </router-link>
       </div>
       <img v-if="post.url" class="post__img" :src="post.url" :alt="post.postName" />
       <img v-else class="post__img" src="./../assets/post.jpg" :alt="post.postName" />
       <h2>{{post.description}}</h2>
-      <span v-html="post.postContent"></span>
+      <span class="postContent" v-html="post.postContent"></span>
   </article>
  
   <CommentsBlock :id="id">
@@ -54,4 +54,5 @@ let t =  new Date(time);
 
 <style lang="scss">
 @import "./../scss/views/_post.scss";
+@import "./../scss/components/_commentsBlock.scss";
 </style>;

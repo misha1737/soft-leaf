@@ -38,7 +38,9 @@ export default {
                     commentsArray.push(
                         new Comment(
                             p.comment,
-                            p.userId
+                            p.userId,
+                            p.userName,
+                            p.time
                         )
                     ) 
                  })
@@ -58,9 +60,12 @@ export default {
             commit('setLoading', true)
             try {
                 //logic
+                console.log(getters.user.name)
                  const newComment = new Comment(
                      payload.comment,
-                     getters.user.id
+                     getters.user.id,
+                     getters.user.name,
+                     firebase.database.ServerValue.TIMESTAMP
                      );
                  await firebase.database().ref('posts/'+payload.id+'/comments').push(newComment);
 

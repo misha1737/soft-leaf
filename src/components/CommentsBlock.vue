@@ -1,24 +1,28 @@
 <template>
-  <div class="commentsBlock" >
+  <div class="commentsBlock">
     <div class="line"></div>
     <div v-if="checkUser">
-      <textarea v-model="newComment" id="description" placeholder="Enter description"></textarea>
-      <button @click="saveComment()" class="button">send</button>
-      {{submitStatus}}
+      <div class="form">
+        <textarea v-model="newComment" id="description" placeholder="Enter description" resize: none></textarea>
+        <button @click="saveComment()" class="button">send</button>
+        {{submitStatus}}
+      </div>
     </div>
-    <autorizationBlock v-else />
+    <div class="loginError" v-else>
+      <h4>Please login to post a comment</h4>
+      <autorizationBlock />
+    </div>
     <div class="line"></div>
-    <div v-if="comments">
-<div  v-for="(comment,index) in comments" :key="index">
-    
-      <span>{{comment.userId}}</span>
-      <span>time</span>
-      <p>
-        {{comment.comment}}
-      </p>
+    <div v-if="comments" class="comments">
+      <div class="comment" v-for="(comment,index) in comments" :key="index">
+        <div>
+        <span class="comment__name">{{comment.userName}}</span>
+        <span class="comment__time">{{formatTime(comment.time)}}</span>
+        </div>
+        <p class="comment__text">{{comment.comment}}</p>
+      </div>
     </div>
   </div>
-   </div>
 </template>
 <script>
 import autorizationBlock from "./../components/autorizationBlock.vue";
@@ -27,33 +31,37 @@ export default {
   data() {
     return {
       newComment: "",
-      submitStatus: ""
+      submitStatus: "",
     };
   },
   props: {
-    id: String
+    id: String,
   },
   components: {
-    autorizationBlock
+    autorizationBlock,
   },
   methods: {
     saveComment() {
       const commentsObj = {
         comment: this.newComment,
-        id: this.id
+        id: this.id,
       };
 
       this.$store
         .dispatch("saveComment", commentsObj)
         .then(() => {
           this.submitStatus = "OK";
-            this.$store.dispatch('loadComments', {id:this.id});
+          this.$store.dispatch("loadComments", { id: this.id });
         })
-        .catch(err => {
+        .catch((err) => {
           console.log(err);
           this.submitStatus = err;
         });
-    }
+    },
+    formatTime(time) {
+      let t = new Date(time);
+      return t.toLocaleString();
+    },
   },
   computed: {
     checkUser() {
@@ -62,7 +70,7 @@ export default {
     comments() {
       return this.$store.getters.comments;
     },
-  }
+  },
 };
 </script>
 <style lang="scss">

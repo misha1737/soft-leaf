@@ -28,5 +28,5 @@ export default {
 };
 </script>
 <style lang="scss">
-@import "./../scss/_adminPanel.scss";
+@import "./../scss/components/_adminPanel.scss";
 </style>

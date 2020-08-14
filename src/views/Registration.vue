@@ -1,5 +1,5 @@
 <template>
-  <div class="form small">
+  <div class="form small contentSmallBlock">
     <p class="title">Registration</p>
 
 

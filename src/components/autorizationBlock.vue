@@ -1,8 +1,8 @@
 <template>
   <div class="authBlock">
      
-      <div @click="googleSignin()">G</div>
-      <div @click="facebookSignin()">F</div>
+      <div class="authBlock__googleIcon icon" @click="googleSignin()"></div>
+      <div class="authBlock__facebookIcon icon" @click="facebookSignin()"></div>
   </div>
 </template>
 <script>
@@ -22,7 +22,6 @@ export default {
         })
         .catch((err) => {
             console.log('loginUserGoogle-'+err);
-          
         });
     },
     facebookSignin(){
@@ -46,5 +45,5 @@ export default {
 };
 </script>
 <style lang="scss">
-
+@import "./../scss/components/_authBlock.scss";
 </style>

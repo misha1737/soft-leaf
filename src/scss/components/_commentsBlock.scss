@@ -1,0 +1,28 @@
+.commentsBlock{
+    clear: left;
+    width:100%;
+    .loginError{
+        h4{
+            font-size:24px;
+            margin-top:10px;
+            margin-bottom: 10px;
+        }
+    }
+    .comments{
+        .comment{
+            margin:30px 0;
+            &__name{
+                font-weight: bold;
+            }
+            &__time{
+                font-size: 14px;
+                text-align: right;
+                color:$grey;
+                margin-left:10px;
+            }
+            &__text{
+                margin-top: 5px;;
+            }
+        }
+    }
+}

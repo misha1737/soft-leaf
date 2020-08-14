@@ -16,8 +16,9 @@
       margin:0 10px;
   }
   ul {
-    width:100%;
+    width:auto;
     display: flex;
+    flex:1;
     flex-direction: row;
     justify-content: flex-start;
     margin: 0 10px;

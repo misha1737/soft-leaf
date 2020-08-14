@@ -37,6 +37,14 @@ h1, h2, h3, h4, h5, h6{
     padding:40px;
     min-height: calc(100vh - 220px);
 }
+.contentSmallBlock{
+    margin:50px;
+     box-shadow: 0 1px 8px 0 #555;
+     background-color: white;
+     padding:40px;
+     border-radius: 5px;;
+     
+}
 .line{
     width:100%;
     height:1px;
@@ -44,14 +52,10 @@ h1, h2, h3, h4, h5, h6{
 }
  .form{
      position: relative;
-     margin:50px;
-     box-shadow: 0 1px 8px 0 #555;
-     background-color: white;
-     padding:40px;
-     border-radius: 5px;;
      &.small{
         width:300px;
      }
+    
      .title{
          font-size:20px;
          font-weight: bold;
@@ -82,7 +86,22 @@ h1, h2, h3, h4, h5, h6{
            background-color: $error;
        }
      }
-     
+     textarea{
+        border:1px solid $brandColorWhite;
+        outline:none;
+        width:calc(100% - 20px);
+        padding:10px;
+        border-radius:5px;
+        margin:5px 0px;
+        font-size:14px;
+       transition: 0.5s;
+        &:focus{
+            background-color: $brandColorWhite;
+        }
+        &.invalid{
+            background-color: $error;
+        }
+     }
      .errorMsg{
          position: absolute;
         color:$error;
@@ -124,4 +143,12 @@ h1, h2, h3, h4, h5, h6{
             color:black;  
         }
     }
+}
+.editIcon{
+    margin-right: 5px;;
+    width:16px;
+    height:16px;
+    display:inline-block;
+    background-size: cover;
+    background-image: url('./assets/icons/edit.svg');
 }
