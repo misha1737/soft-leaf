@@ -1,37 +1,40 @@
 <template>
   <div class="contentBlock">
+    <modal v-if="modalOpen" :text="'Delete post?'" v-on:reply="removePost"></modal>
     <div class="postList">
-      <ul>
-       
-          <div v-for="post in posts" :key="post.id">
+      <ul >
+        <div v-for="post in posts" :key="post.id" class="elementsList">
+          <router-link  :to="'/postEdit/'+post.id" class="elementList"  >
             <span>{{post.postName}}</span>
             
-            <span @click=" deletePost(post.postName)">X</span>
-          </div>
-
+           </router-link> 
+           <span  @click="tryDeletePost(post.id)"><span class="removeIcon"></span></span>
+</div>
       </ul>
-      <button v-if="!loading" class="button" @click="saveCategories()">Save Posts</button>
+      <!-- <button v-if="!loading" class="button" @click="saveCategories()">Save Posts</button>
       <button v-else class="button disabled">Loading...</button>
-      {{state}}
+      {{state}} -->
     </div>
   </div>
 </template>
 <script>
-import draggable from "vuedraggable";
+import modal from "./../components/Modal.vue";
 export default {
   name: "SiteMenuSetup",
   data() {
     return {
       categoryName: "",
       state:"",
-      selected:""
+      selected:"",
+      postId:null,
+       modalOpen: false,
     };
   },
   props: {
     text: String
   },
   components: {
-    draggable
+    modal
   },
   methods: {
  
@@ -39,16 +42,32 @@ export default {
       this.$store
         .dispatch("saveCategories")
         .then(() => {
-        this.$store.dispatch("loadPosts");
+        this.$store.dispatch("getPosts");
           this.state="categoriesSaved"
         });
     },
-    deletePost(categoryName) {
-    //    this.categories= this.categories.filter(elememt=> {
-    //     return elememt.categoryName != categoryName;
-    //   }); 
-    //   this.state="need save"
-    }
+    tryDeletePost(postId){
+      this.postId=postId;
+      this.modalOpen=true;
+
+    },
+    removePost(result) {
+      if (!result) {
+         this.postId=null;
+        this.modalOpen = false;
+        return;
+      }
+      this.$store
+        .dispatch("removePost", this.postId)
+        .then(() => {
+          this.submitStatus = "OK";
+          this.$store.dispatch("getPosts");
+        })
+        .catch((err) => {
+          console.log(err);
+          this.submitStatus = err;
+        });
+    },
   },
   computed: {
     loading() {
@@ -59,7 +78,7 @@ export default {
         return  this.$store.getters.AllPosts
       },
       set(value) {
-        this.$store.commit("loadPosts", value);
+        this.$store.commit("getPosts", value);
       }
     }
   }

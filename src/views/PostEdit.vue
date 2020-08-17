@@ -97,7 +97,7 @@ export default {
         .dispatch("removePost", this.id)
         .then(() => {
           this.submitStatus = "OK";
-          this.$store.dispatch("loadPosts");
+          this.$store.dispatch("getPosts");
           this.$router.push("/");
         })
         .catch((err) => {
@@ -177,7 +177,7 @@ export default {
           .dispatch("savePost", postObj)
           .then(() => {
             this.submitStatus = "OK";
-            this.$store.dispatch("loadPosts");
+            this.$store.dispatch("getPosts");
           })
           .catch((err) => {
             console.log(err);
@@ -189,7 +189,7 @@ export default {
           .dispatch("updatePost", postObj)
           .then(() => {
             this.submitStatus = "OK";
-            this.$store.dispatch("loadPosts");
+            this.$store.dispatch("getPosts");
           })
           .catch((err) => {
             console.log(err);

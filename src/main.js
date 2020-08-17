@@ -33,7 +33,7 @@ new Vue({
       if (user){
         this.$store.dispatch('loggedUser',user);
       }
-      this.$store.dispatch('loadPosts');
+      this.$store.dispatch('getPosts');
       this.$store.dispatch('loadCategories');
     })
     

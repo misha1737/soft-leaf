@@ -25,20 +25,58 @@ export default {
         savePost(state, payload) {
             state.newPost = payload;
         },
+        getPosts(state, payload){
+            state.posts = payload;
+        },
        
         
     },
     actions: {
       
+        async getPosts({commit,getters}) {
+            commit('clearError')
+            commit('setLoading', true)
+            try {
+             let post;
+             if (!getters.timeInLastPost)
+            post= await firebase.database().ref('posts').orderByChild('time').startAt(0).limitToLast(11).once('value')
+             else
+            post= await firebase.database().ref('posts').orderByChild('time').endAt(getters.timeInLastPost).limitToLast(11).once('value')
+
+                const posts =  post.val();
+                let postsArray = [];
+
+                Object.keys(posts).forEach(key=>{
+                    const p = posts[key]
+                    postsArray.push(
+                        new Post(
+                            p.postName,
+                            p.postContent,
+                            p.description,
+                            p.userId,
+                            key,
+                            p.url,
+                            p.category,
+                            p.publish,
+                            p.time
+                        )
+                    ) 
+                })
+                
+                postsArray= postsArray.sort((a, b) => a.time < b.time ? 1 : -1)
+                commit('getPosts', postsArray)
+                commit('setLoading', false)
+            } catch (error) {
+                commit('setLoading', false)
+                commit('setError', error.message)
+                throw error
+            }
+        },
 
         async loadPosts({commit,getters}) {
             commit('clearError')
             commit('setLoading', true)
             try {
-                //const post= await firebase.database().ref('posts').once('value')
-               // const post= await firebase.database().ref('posts').orderByKey().limitToFirst(2).once('value')
-             // const post= await firebase.database().ref('posts').orderByKey().limitToFirst(2).once('value')
-             //const post= await firebase.database().ref('posts').orderByChild('postName').equalTo('new post').once('value')
              let post;
              if (!getters.timeInLastPost)
             post= await firebase.database().ref('posts').orderByChild('time').startAt(0).limitToLast(11).once('value')
