@@ -149,6 +149,23 @@ export default {
           this.submitStatus = err;
         });
     },
+      removePost(result) {
+      if (!result) {
+        this.modalOpen = false;
+        return;
+      }
+      this.$store
+        .dispatch("removePost", this.id)
+        .then(() => {
+          this.submitStatus = "OK";
+          this.$store.dispatch("getPosts");
+          this.$router.push("/");
+        })
+        .catch((err) => {
+          console.log(err);
+          this.submitStatus = err;
+        });
+    },
   },
 };
 </script>
