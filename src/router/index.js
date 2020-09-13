@@ -8,7 +8,7 @@ import PostEdit from '../views/PostEdit.vue'
 import Post from '../views/Post.vue'
 import SiteMenuSetup from '../views/SiteMenuSetup.vue'
 import PostList from '../views/PostList.vue'
-
+import Users from '../views/Users.vue'
 Vue.use(VueRouter)
 
   const routes = [
@@ -78,6 +78,11 @@ Vue.use(VueRouter)
     name: 'About',
     component: () => import(/* webpackChunkName: "about" */ '../views/About.vue'),
    
+  },
+  {
+    path: '/users',
+    name: 'users',
+    component: Users,
   }
 ]
 

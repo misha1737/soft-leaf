@@ -4,12 +4,16 @@ import User from './user_help.js'
 export default{
     
     state:{
-        user: null
+        user: null,
+        users: []
     },
     mutations:{
         setUser(state, payload){
             state.user = payload
-        }
+        },
+        getUsers(state, payload) {
+            state.users = payload;
+        },
 
     },
     actions:{
@@ -95,11 +99,42 @@ export default{
         logoutUser({commit}){
                 firebase.auth().signOut();
                 commit('setUser', null);
-        }
+        },
+        async getUsers({ commit, getters }) {
+            commit('clearError')
+            commit('setLoading', true)
+            try {
+       
+                const user= await firebase.database().ref('users/').once('value');
+                const users =  user.val();
+                let usersArray = [];
+                 Object.keys(users).forEach(key => {
+                     const p = users[key];
+                      usersArray.push(
+                        new User(
+                        key,
+                        p.name,
+                        p.moderator,
+                        p.admin
+                        )
+                     )
+                })
+
+                commit('getUsers', usersArray)
+                commit('setLoading', false)
+            } catch (error) {
+                commit('setLoading', false)
+                commit('setError', error.message)
+                throw error
+            }
+        },
     },
     getters:{
         user (state){
             return state.user
+        },
+        AllUsers: state => {
+            return state.users
         },
         checkUser (state) {
             return state.user !== null

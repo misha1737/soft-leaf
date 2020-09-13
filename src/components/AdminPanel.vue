@@ -9,7 +9,7 @@
     <router-link to="/siteMenuSetup">
       <div class="component">Site menu</div>
     </router-link>
-    <router-link to="/">
+    <router-link to="/users">
       <div class="component">Users</div>
     </router-link>
   </div>
