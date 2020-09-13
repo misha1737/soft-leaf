@@ -11,6 +11,7 @@ export default{
         setUser(state, payload){
             state.user = payload
         },
+
         getUsers(state, payload) {
             state.users = payload;
         },
@@ -25,7 +26,7 @@ export default{
                 const user = await firebase.auth().createUserWithEmailAndPassword(email, password);
                 //так записуюься дані в базу
                 await firebase.database().ref('users/'+user.user.uid+'/name').set(userName);
-                commit('setUser', new User(user.user.uid,userName,null,null))
+                commit('setUser', new User(user.user.uid,userName,null,null,null))
                 commit('setLoading',false)
             }catch(error){
                 commit('setLoading',false)
@@ -43,7 +44,7 @@ export default{
 
 
                 const userInfo= await (await firebase.database().ref('users/'+user.user.uid).once('value')).val();
-                commit('setUser', new User(user.user.uid,userInfo.name,userInfo.moderator,userInfo.admin ))
+                commit('setUser', new User(user.user.uid,userInfo.name,userInfo.moderator,userInfo.admin,userInfo.banned ))
                 //commit('setLoading',false)
 
             }catch(error){
@@ -60,7 +61,7 @@ export default{
                   console.log(user.photoURL);
                   console.log(user.uid);
                  await firebase.database().ref('users/'+user.uid+'/name').set(user.displayName);
-                  commit('setUser', new User(user.uid,user.displayName,null,null));
+                  commit('setUser', new User(user.uid,user.displayName,null,null,null));
                   commit('setLoading',false)
 
               }).catch(function(error) {
@@ -80,7 +81,7 @@ export default{
                   console.log(user.photoURL);
                   console.log(user.uid);
                  await firebase.database().ref('users/'+user.uid+'/name').set(user.displayName);
-                  commit('setUser', new User(user.uid,user.displayName,null,null));
+                  commit('setUser', new User(user.uid,user.displayName,null,null,null));
                   commit('setLoading',false)
 
               }).catch(function(error) {
@@ -94,7 +95,7 @@ export default{
         },
         async loggedUser({commit}, payload){
                 const userInfo= await (await firebase.database().ref('users/'+payload.uid).once('value')).val();
-                commit('setUser', new User(payload.uid,userInfo.name,userInfo.moderator,userInfo.admin ))
+                commit('setUser', new User(payload.uid,userInfo.name,userInfo.moderator,userInfo.admin,userInfo.banned ))
         },
         logoutUser({commit}){
                 firebase.auth().signOut();
@@ -104,7 +105,6 @@ export default{
             commit('clearError')
             commit('setLoading', true)
             try {
-       
                 const user= await firebase.database().ref('users/').once('value');
                 const users =  user.val();
                 let usersArray = [];
@@ -115,11 +115,11 @@ export default{
                         key,
                         p.name,
                         p.moderator,
-                        p.admin
+                        p.admin,
+                        p.banned
                         )
                      )
                 })
-
                 commit('getUsers', usersArray)
                 commit('setLoading', false)
             } catch (error) {
@@ -128,6 +128,19 @@ export default{
                 throw error
             }
         },
+        async saveRule({ commit },payload) {
+            commit('clearError')
+            commit('setLoading', true)
+            try {
+                await firebase.database().ref('users/' + payload.id).update(
+                    payload
+                );
+            } catch (error) {
+                commit('setLoading', false)
+                commit('setError', error.message)
+                throw error
+            }
+        }
     },
     getters:{
         user (state){
