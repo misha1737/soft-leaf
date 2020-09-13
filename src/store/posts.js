@@ -138,18 +138,32 @@ export default {
                 throw error
             }
         },
-        async uploadImg({ commit, getters }, payload) {
+
+
+        async removeImage({ commit, getters }) {
+            try {
+                firebase.storage().ref("posts/").child(getters.selectedPost.id).listAll()
+                .then(function (result) {
+                    result.items.forEach((item) => {
+                        firebase.storage().ref(item.location.path_).delete();
+                    });
+                });
+                commit('updateImg', null);
+
+
+            }catch (error) {
+                
+                commit('setError', error.message)
+                throw error
+            }
+        },
+
+
+        async uploadImg({ commit, getters, dispatch }, payload) {
             commit('clearError')
             commit('setLoading', true)
             try {
-                //видалення старої картинки
-                firebase.storage().ref("posts/").child(getters.selectedPost.id).listAll()
-                    .then(function (result) {
-                        result.items.forEach((item) => {
-                            firebase.storage().ref(item.location.path_).delete();
-                        });
-                    });
-                    commit('updateImg', null);
+                dispatch('removeImage');
                 const storageRef = firebase.storage().ref(`posts/${getters.selectedPost.id}/${payload.name}`).put(payload);
                 storageRef.on("state_changed",
                     (snapshot) => {
@@ -178,12 +192,14 @@ export default {
             }
 
         },
-        async removePost({ commit, getters }, payload) {
+        async removePost({ commit,dispatch, getters }, payload) {
             commit('clearError')
             commit('setLoading', true)
             try {
                 //logic
+                
                 await firebase.database().ref('posts/' + payload).remove();
+                dispatch('removeImage');
                 commit('setLoading', false);
             } catch (error) {
                 commit('setLoading', false);
