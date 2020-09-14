@@ -49,6 +49,7 @@ export default {
       this.$store.commit("getUsers", this.users);
       this.$store.dispatch("saveRule",user);
     },
+
   },
   computed: {
     loading() {
