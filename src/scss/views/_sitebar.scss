@@ -1,0 +1,42 @@
+.sitebar {
+  background-color: white;
+  width: 305px;
+  border-left: 1px solid #ccc;
+  margin-left: 15px;
+  padding: 0 15px;
+  margin-top: 15px;
+  h2 {
+    border-bottom: 1px solid $brandColorDark;
+    margin-bottom: 15px;
+  }
+  li {
+    padding: 10px 0;
+    margin: 0;
+    opacity: 0.5;
+    transition: 0.7s;
+    max-height: 66px;
+    @include blur(40px);
+    cursor: pointer;
+    &:hover {
+      opacity: 1;
+    }
+  }
+}
+
+@media (max-width: 1300px) {
+  .sitebar {
+    width: 205px;
+    li {
+      max-height: 64px;
+    }
+  }
+}
+@media (max-width: 900px) {
+  .sitebar {
+    border: none;
+    width: 100%;
+    padding: 0;
+    margin: 0;
+    margin-top: 15px;
+  }
+}

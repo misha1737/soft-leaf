@@ -25,15 +25,33 @@ h3,
 h4,
 h5,
 h6 {
+  line-height: 1.2;
   margin: 0;
   font-family: $Helvetica;
+}
+h1 {
   font-size: 20px;
+}
+h2 {
+  font-size: 18px;
+}
+h3 {
+  font-size: 16px;
+}
+h4 {
+  font-size: 14px;
+}
+h5 {
+  font-size: 12px;
+}
+h6 {
+  font-size: 10px;
 }
 #nav {
   height: 50px;
 }
 .contentBlock {
-position: relative;
+  position: relative;
   width: 1200px;
   margin: auto;
   background: white;
@@ -80,7 +98,6 @@ position: relative;
     border-radius: 5px;
     margin: 5px 0px;
     font-size: 14px;
-    // outline: 1px solid $brandColorWhite;
     transition: 0.5s;
     &:focus {
       background-color: $brandColorWhite;
@@ -106,28 +123,25 @@ position: relative;
       background-color: $error;
     }
   }
-  .select{
+  .select {
     border: 1px solid $brandColorWhite;
     outline: none;
-    
-    
+
     border-radius: 5px;
     margin: 5px 0px;
     font-size: 18px;
     padding-right: 10px;
     width: 50%;
-    select{
-        padding: 10px;
-        border:none;
-        width: 100%;
-        outline: none;
-        
+    select {
+      padding: 10px;
+      border: none;
+      width: 100%;
+      outline: none;
     }
-    option{
-        font-size: 18px;
-        width: calc(100% + 10px);
+    option {
+      font-size: 18px;
+      width: calc(100% + 10px);
     }
-    //  background:red;
   }
   .errorMsg {
     position: absolute;
@@ -140,58 +154,57 @@ position: relative;
     width: calc(100% - 80px);
   }
   .uploadImage {
-      width:100%;
-      .preview{
-        max-width:300px;
-        max-height:300px;
-        height:auto;
-        width:auto;
-       border: 1px solid $brandColorWhite;
-      }
-      progress{
-          width:100%;
-      }
-      .inputFile{
-          display:none;
-      }
+    width: 100%;
+    .preview {
+      max-width: 300px;
+      max-height: 300px;
+      height: auto;
+      width: auto;
+      border: 1px solid $brandColorWhite;
+    }
+    progress {
+      width: 100%;
+    }
+    .inputFile {
+      display: none;
+    }
     &.disabled {
       opacity: 0.3;
-      button.button{
-          &:hover{
-            background: $brandColorWhite;
-            color:black;
-            cursor:not-allowed;
-          }
+      button.button {
+        &:hover {
+          background: $brandColorWhite;
+          color: black;
+          cursor: not-allowed;
+        }
       }
     }
   }
-  .choice{
-    display:flex;
+  .choice {
+    display: flex;
     flex-direction: row;
     align-items: center;
     justify-content: flex-start;
-    padding:15px 0;
-    input{
-        margin:0;
-        width:auto;
-        margin-right:5px;
-        margin-left:20px;
-        &:first-child{
-            margin-left:0px;
-        }
+    padding: 15px 0;
+    input {
+      margin: 0;
+      width: auto;
+      margin-right: 5px;
+      margin-left: 20px;
+      &:first-child {
+        margin-left: 0px;
+      }
     }
-    label{
-        cursor:pointer;
-        margin:0;
-        width:auto;
-        padding:15px 0;
+    label {
+      cursor: pointer;
+      margin: 0;
+      width: auto;
+      padding: 15px 0;
     }
   }
 }
 .button {
   border: none;
   outline: none;
-  //border:1px solid $brandColorWhite;
   width: auto;
   border-radius: 5px;
   background: $brandColorWhite;
@@ -215,114 +228,148 @@ position: relative;
   }
 }
 .editButton {
-    position: absolute;
-    right:40px;
-    top:10px;;
-    font-size: 16px;;
-    opacity:0.5;
-    transition: 0.5s;
-    z-index:10;
-    background:#fff;
-    padding:5px;
-    cursor:pointer;
-    &:hover{
-        opacity:1;
-    }
-  
-
-  
-
-
+  position: absolute;
+  right: 40px;
+  top: 10px;
+  font-size: 16px;
+  opacity: 0.5;
+  transition: 0.5s;
+  z-index: 10;
+  background: #fff;
+  padding: 5px;
+  cursor: pointer;
+  &:hover {
+    opacity: 1;
+  }
 }
 
 .editIcon {
-    margin-right: 5px;
-    width: 16px;
-    height: 16px;
-    display: inline-block;
-    background-size: cover;
-    background-image: url("./assets/icons/edit.svg");
-  }
-  .removeIcon {
-    margin-right: 5px;
-    width: 16px;
-    height: 16px;
-    display: inline-block;
-    background-size: cover;
-    background-image: url("./assets/icons/remove.svg");
-    cursor:pointer;
-  }
-.dragList{
-  .dragElement{
-    width:400px;
-    margin:10px 0;
-    
-    display:flex;
+  margin-right: 5px;
+  width: 16px;
+  height: 16px;
+  display: inline-block;
+  background-size: cover;
+  background-image: url("./assets/icons/edit.svg");
+}
+.removeIcon {
+  margin-right: 5px;
+  width: 16px;
+  height: 16px;
+  display: inline-block;
+  background-size: cover;
+  background-image: url("./assets/icons/remove.svg");
+  cursor: pointer;
+}
+.dragList {
+  .dragElement {
+    width: 400px;
+    margin: 10px 0;
+    display: flex;
     background: $brandColorWhite;
-    padding:10px 10px;
-    border-radius:5px;
-    cursor:move;
-    input{
+    padding: 10px 10px;
+    border-radius: 5px;
+    cursor: move;
+    input {
       margin-left: 30px;
       margin-right: 30px;
-      flex:1;
-      border:none;
-      outline:none;
+      flex: 1;
+      border: none;
+      outline: none;
       background: $brandColorWhite;
       border-bottom: 1px solid $brandColorWhite;
-      //width:300px;
-      &:focus{
+      &:focus {
         border-bottom: 1px solid black;
       }
     }
-    span{
-      display:flex;
+    span {
+      display: flex;
     }
   }
-  
-  
 }
 
-.elementsList{
-  width:400px;
-  display:flex;
+.elementsList {
+  width: 400px;
+  display: flex;
   flex-direction: row;
-  .elementList{
-    width:400px;
-    margin:10px 0;
-    display:flex;
+  .elementList {
+    width: 400px;
+    margin: 10px 0;
+    display: flex;
     flex-direction: row;
     background: $brandColorWhite;
-    padding:10px 10px;
-    border-radius:5px;
-    font-size:16px;
-    cursor:pointer;
-    input{
+    padding: 10px 10px;
+    border-radius: 5px;
+    font-size: 16px;
+    cursor: pointer;
+    input {
       margin-left: 30px;
       margin-right: 30px;
-      flex:1;
-      border:none;
-      outline:none;
+      flex: 1;
+      border: none;
+      outline: none;
       background: $brandColorWhite;
       border-bottom: 1px solid $brandColorWhite;
-      //width:300px;
-      &:focus{
+      &:focus {
         border-bottom: 1px solid black;
       }
     }
-  
-   
   }
-  
-  span{
-    display:flex;
-    .removeIcon{
-      margin-left: 32px;;
-      margin-top:16px;
-      width:26px;
-      height:26px;
-      //width:32px;
+  span {
+    display: flex;
+    .removeIcon {
+      margin-left: 32px;
+      margin-top: 16px;
+      width: 26px;
+      height: 26px;
     }
   }
 }
 
+@media (max-width: 1300px) {
+  body {
+    h1 {
+      font-size: 18px;
+    }
+    h2 {
+      font-size: 13px;
+    }
+    h3 {
+      font-size: 12px;
+    }
+    h6 {
+      font-size: 8px;
+    }
+    p {
+      font-size: 13px;
+    }
+    .contentBlock {
+      width: 800px;
+      margin: auto;
+      margin: 40px auto;
+      padding: 40px;
+      min-height: calc(100vh - 220px);
+    }
+  }
+}
+@media (max-width: 900px) {
+  body {
+    .contentBlock {
+      width: 600px;
+      margin: auto;
+      margin: 40px auto;
+      padding: 40px;
+      min-height: calc(100vh - 220px);
+    }
+  }
+}
+@media (max-width: 768px) {
+  body {
+    .contentBlock {
+      width: calc(100% - 150px);
+      margin: auto;
+      margin: 40px auto;
+      padding: 40px;
+      min-height: calc(100vh - 220px);
+    }
+  }
+}

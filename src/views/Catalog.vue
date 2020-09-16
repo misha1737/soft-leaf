@@ -17,13 +17,15 @@
       
     </div>
     </div>
-    <div class="sitebar">sitebar</div>
+    <Sitebar :posts="posts"></Sitebar>
+
     </div>
     <button class="button" @click="loadMore()">loadMore</button>
   </div>
 </template>
 
 <script>
+import Sitebar from './../components/Sitebar.vue'
 export default {
   name: "Home",
   data() {
@@ -41,6 +43,9 @@ let t =  new Date(time);
     loadMore(){
        this.$store.dispatch('loadPosts');
     }
+  },
+  components: {
+    Sitebar
   },
   computed: {
      category() {

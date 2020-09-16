@@ -9,7 +9,7 @@
       </div>
     </div>
     <div class="loginError" v-else>
-      <h4>Please login to post a comment</h4>
+      <h3>Please login to post a comment</h3>
       <autorizationBlock />
     </div>
     <div class="line"></div>
