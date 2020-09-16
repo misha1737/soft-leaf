@@ -1,11 +1,17 @@
 .post{
+    margin-bottom:15px;
     h1{
-        margin-bottom:40px;
-        font-size: 28px;;
+        margin-bottom:20px;
+        font-size: 24px;;
     }
     h2{
-        margin-bottom:15px;
-        font-size: 24px;;
+        margin-top:15px;
+        font-size: 18px;;
+        line-height: 1.5;
+        
+    }
+    h2.description{
+        margin-top:0;
     }
     &__img{
         width:50%;
@@ -14,9 +20,36 @@
         margin-bottom: 5px;;
     }
     p{
-        font-size: 21px;
+        font-size: 18px;
         line-height: 1.5;
         font-weight: normal;
+
+    }
+    ul li{
+        font-size: 18px;
+        line-height: 1.5;
+        font-weight: normal; 
+        position: relative;
+        padding-left: 40px;
+        &:before{
+            position: absolute;
+            content:"";
+            left:20px;
+            top:10px;
+            width:8px;
+            height:8px;
+            background-color: $brandColorDark;
+        }
+    }
+    ol li{
+        font-size: 18px;
+        line-height: 1.5;
+        font-weight: normal; 
+    }
+    h6{
+        font-size: 18px;
+        font-weight: normal;
+        margin-bottom: 5px;;
     }
     .postContent{
         a{
@@ -24,5 +57,13 @@
             font-size: 21px;
             text-decoration: revert;
         }
+    }
+    blockquote{
+        font-size: 18px;
+        line-height: 1.5;
+        font-weight: normal; 
+        margin-left:30px;
+        font-style: italic;
+
     }
 }
