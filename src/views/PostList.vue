@@ -9,7 +9,7 @@
             
            </router-link> 
            <span  @click="tryDeletePost(post.id)"><span class="removeIcon"></span></span>
-</div>
+      </div>
       </ul>
       <!-- <button v-if="!loading" class="button" @click="saveCategories()">Save Posts</button>
       <button v-else class="button disabled">Loading...</button>

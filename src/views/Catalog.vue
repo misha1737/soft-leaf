@@ -1,15 +1,23 @@
 <template>
-  <div class="posts contentBlock">
+  <div class=" contentBlock">
+    <div class="catalog">
+    <div class="posts">
     <div  v-for="post in posts" :key="post.id">
       <router-link class="postPreview" :to="'/post/'+post.id">
-        <img v-if="post.url" class="postPreview__img" :src="post.url" alt /> 
+      <div class="postPreview__img">
+        <img v-if="post.url"  :src="post.url" alt /> 
         <img v-else class="postPreview__img" src="./../assets/post.jpg" alt />
+      </div>
         <div class="postPreview__text">
           <h2>{{post.postName}}</h2>
           <h3>{{post.description}}</h3>
           <h6>{{formatTime(post.time)}}</h6>
         </div>
       </router-link>
+      
+    </div>
+    </div>
+    <div class="sitebar">sitebar</div>
     </div>
     <button class="button" @click="loadMore()">loadMore</button>
   </div>
@@ -53,5 +61,5 @@ let t =  new Date(time);
 </script>
 
 <style lang="scss">
-@import "./../scss/views/_posts.scss";
+@import "./../scss/views/_catalog.scss";
 </style>;

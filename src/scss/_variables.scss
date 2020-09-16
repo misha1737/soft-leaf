@@ -16,3 +16,19 @@ $Helvetica: Helvetica;
   font-weight: normal;
   font-style: normal;
 }
+
+@mixin blur($height){
+  position: relative;
+  overflow: hidden;
+ 
+  &:after{
+    content: "";
+    height: 50px;
+    width: 100%;
+    position: absolute;
+    top: $height;
+    left: 0;
+    background: linear-gradient(180deg,transparent 50%,#fff);
+    
+  }
+}

@@ -1,0 +1,76 @@
+.catalog{
+    display:flex;
+    flex-direction: row;
+    .posts {
+        flex: 1;
+        display:flex;
+        flex-direction: column;
+        overflow: auto;
+        .title{
+            border-bottom: 1px solid $grey;  
+        }
+      .postPreview {
+        cursor:pointer;
+        width: 100%;
+        display:flex;
+        flex-direction: row;
+        padding: 15px 0;
+        border-bottom: 1px solid $grey;
+        transition:0.5s;
+        align-items: end;
+        &:hover{
+           // background-color: $brandLightText;
+           
+               img{
+                   
+                   transform: scale(1.1);
+               }
+           
+        }
+        &__img {
+            min-width:300px;
+            max-width:300px;
+            height:200px;
+            margin-right: 15px;;
+            overflow:hidden;
+            img{
+                transition: 0.5s;
+                width: 100%;;
+                
+                height:auto;
+            }
+         
+        }
+        &__text {
+          h2 {
+            margin-bottom: 15px;;
+           max-height:72px;
+            @include blur(18px);
+          }
+          h3 {
+              font-size: 17px;
+              font-weight: normal;
+              line-height: 1.5;
+              max-height:100px;
+              
+              margin-bottom: 15px;;
+              @include blur(47px);
+        
+          }
+          h6{
+            font-size:10px;
+            text-align: right;
+            margin-right: 15px;
+          }
+        }
+      }
+    }
+ 
+    .sitebar{
+        background-color: white;
+        width:305px;
+        border-left: 1px solid #ccc;
+        margin-left: 15px;
+        
+    }
+}
