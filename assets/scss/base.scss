@@ -1,0 +1,376 @@
+body {
+    margin: 0;
+    font-family: $Helvetica;
+    background-color: $brandColorBackground;
+  }
+  ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+  a {
+    text-decoration: none;
+    font-size: 24px;
+    font-family: $Helvetica;
+    color: $brandDarkText;
+  }
+  p {
+    font-size: 16px;
+    font-family: $Helvetica;
+    margin: 0;
+  }
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    line-height: 1.2;
+    margin: 0;
+    font-family: $Helvetica;
+  }
+  h1 {
+    font-size: 20px;
+  }
+  h2 {
+    font-size: 18px;
+  }
+  h3 {
+    font-size: 16px;
+  }
+  h4 {
+    font-size: 14px;
+  }
+  h5 {
+    font-size: 12px;
+  }
+  h6 {
+    font-size: 10px;
+  }
+  #nav {
+    height: 50px;
+  }
+  .contentBlock {
+    position: relative;
+    width: 1200px;
+    margin: auto;
+    background: white;
+    box-shadow: 0 1px 8px 0 #555;
+    margin: 40px auto;
+    padding: 40px;
+    min-height: calc(100vh - 220px);
+  }
+  .contentSmallBlock {
+    margin: 50px;
+    box-shadow: 0 1px 8px 0 #555;
+    background-color: white;
+    padding: 40px;
+    border-radius: 5px;
+  }
+  .line {
+    width: 100%;
+    height: 1px;
+    background-color: $grey;
+  }
+  .form {
+    position: relative;
+    &.small {
+      width: 300px;
+    }
+  
+    .title {
+      font-size: 20px;
+      font-weight: bold;
+      margin-bottom: 0px;
+      text-transform: uppercase;
+      margin: 15px 0px;
+    }
+    label {
+      font-weight: bold;
+      margin-top: 15px;
+      display: block;
+    }
+    input {
+      border: 1px solid $brandColorWhite;
+      outline: none;
+      width: calc(100% - 20px);
+      padding: 10px;
+      border-radius: 5px;
+      margin: 5px 0px;
+      font-size: 14px;
+      transition: 0.5s;
+      &:focus {
+        background-color: $brandColorWhite;
+      }
+      &.invalid {
+        background-color: $error;
+      }
+    }
+    textarea {
+      border: 1px solid $brandColorWhite;
+      outline: none;
+      width: calc(100% - 20px);
+      padding: 10px;
+      border-radius: 5px;
+      margin: 5px 0px;
+      font-size: 14px;
+      transition: 0.5s;
+      resize: none;
+      &:focus {
+        background-color: $brandColorWhite;
+      }
+      &.invalid {
+        background-color: $error;
+      }
+    }
+    .select {
+      border: 1px solid $brandColorWhite;
+      outline: none;
+  
+      border-radius: 5px;
+      margin: 5px 0px;
+      font-size: 18px;
+      padding-right: 10px;
+      width: 50%;
+      select {
+        padding: 10px;
+        border: none;
+        width: 100%;
+        outline: none;
+      }
+      option {
+        font-size: 18px;
+        width: calc(100% + 10px);
+      }
+    }
+    .errorMsg {
+      position: absolute;
+      color: $error;
+      font-size: 12px;
+      margin: 0;
+      margin-top: -5px;
+      display: block;
+      min-height: 12px;
+      width: calc(100% - 80px);
+    }
+    .uploadImage {
+      width: 100%;
+      .preview {
+        max-width: 300px;
+        max-height: 300px;
+        height: auto;
+        width: auto;
+        border: 1px solid $brandColorWhite;
+      }
+      progress {
+        width: 100%;
+      }
+      .inputFile {
+        display: none;
+      }
+      &.disabled {
+        opacity: 0.3;
+        button.button {
+          &:hover {
+            background: $brandColorWhite;
+            color: black;
+            cursor: not-allowed;
+          }
+        }
+      }
+    }
+    .choice {
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      justify-content: flex-start;
+      padding: 15px 0;
+      input {
+        margin: 0;
+        width: auto;
+        margin-right: 5px;
+        margin-left: 20px;
+        &:first-child {
+          margin-left: 0px;
+        }
+      }
+      label {
+        cursor: pointer;
+        margin: 0;
+        width: auto;
+        padding: 15px 0;
+      }
+    }
+  }
+  .button {
+    border: none;
+    outline: none;
+    width: auto;
+    border-radius: 5px;
+    background: $brandColorWhite;
+    padding: 10px;
+    margin: 15px 0px;
+    font-weight: bold;
+    font-size: 14px;
+    transition: 0.5s;
+    color: black;
+    cursor: pointer;
+    &:hover {
+      background: $brandColorDark;
+      color: white;
+    }
+    &.disabled {
+      background: $grey;
+      &:hover {
+        background: $grey;
+        color: black;
+      }
+    }
+  }
+  .editButton {
+    position: absolute;
+    right: 40px;
+    top: 10px;
+    font-size: 16px;
+    opacity: 0.5;
+    transition: 0.5s;
+    z-index: 10;
+    background: #fff;
+    padding: 5px;
+    cursor: pointer;
+    &:hover {
+      opacity: 1;
+    }
+  }
+  
+  .editIcon {
+    margin-right: 5px;
+    width: 16px;
+    height: 16px;
+    display: inline-block;
+    background-size: cover;
+    //background-image: url("./../assets/icons/edit.svg");
+  }
+  .removeIcon {
+    margin-right: 5px;
+    width: 16px;
+    height: 16px;
+    display: inline-block;
+    background-size: cover;
+    //background-image: url("./../assets/icons/remove.svg");
+    cursor: pointer;
+  }
+  .dragList {
+    .dragElement {
+      width: 400px;
+      margin: 10px 0;
+      display: flex;
+      background: $brandColorWhite;
+      padding: 10px 10px;
+      border-radius: 5px;
+      cursor: move;
+      input {
+        margin-left: 30px;
+        margin-right: 30px;
+        flex: 1;
+        border: none;
+        outline: none;
+        background: $brandColorWhite;
+        border-bottom: 1px solid $brandColorWhite;
+        &:focus {
+          border-bottom: 1px solid black;
+        }
+      }
+      span {
+        display: flex;
+      }
+    }
+  }
+  
+  .elementsList {
+    width: 400px;
+    display: flex;
+    flex-direction: row;
+    .elementList {
+      width: 400px;
+      margin: 10px 0;
+      display: flex;
+      flex-direction: row;
+      background: $brandColorWhite;
+      padding: 10px 10px;
+      border-radius: 5px;
+      font-size: 16px;
+      cursor: pointer;
+      input {
+        margin-left: 30px;
+        margin-right: 30px;
+        flex: 1;
+        border: none;
+        outline: none;
+        background: $brandColorWhite;
+        border-bottom: 1px solid $brandColorWhite;
+        &:focus {
+          border-bottom: 1px solid black;
+        }
+      }
+    }
+    span {
+      display: flex;
+      .removeIcon {
+        margin-left: 32px;
+        margin-top: 16px;
+        width: 26px;
+        height: 26px;
+      }
+    }
+  }
+  
+  @media (max-width: 1300px) {
+    body {
+      h1 {
+        font-size: 18px;
+      }
+      h2 {
+        font-size: 13px;
+      }
+      h3 {
+        font-size: 12px;
+      }
+      h6 {
+        font-size: 8px;
+      }
+      p {
+        font-size: 13px;
+      }
+      .contentBlock {
+        width: 800px;
+        margin: auto;
+        margin: 40px auto;
+        padding: 40px;
+        min-height: calc(100vh - 220px);
+      }
+    }
+  }
+  @media (max-width: 900px) {
+    body {
+      .contentBlock {
+        width: 600px;
+        margin: auto;
+        margin: 40px auto;
+        padding: 40px;
+        min-height: calc(100vh - 220px);
+      }
+    }
+  }
+  @media (max-width: 768px) {
+    body {
+      .contentBlock {
+        width: calc(100% - 150px);
+        margin: auto;
+        margin: 40px auto;
+        padding: 40px;
+        min-height: calc(100vh - 220px);
+      }
+    }
+  }
+  
