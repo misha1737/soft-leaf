@@ -45,16 +45,6 @@ async fetch({store}) {
       let t = new Date(time);
       return t.toLocaleString();
     },
-
-    // addCounter() {
-    //   this.$store.commit('posts/increment')
-    //  // this.$store.posts.commit("increment");
-    // },
-    // addCounterA() {
-    //   this.$store.dispatch('posts/incrementA')
-    //  // this.$store.posts.commit("increment");
-    // },
-    
   },
 mounted(){
 

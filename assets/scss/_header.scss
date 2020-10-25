@@ -1,0 +1,66 @@
+.header {
+  background-color: #fff;
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+  height: 50px;
+  align-items: center;
+  box-shadow: 0 1px 8px 0 #555;
+  position:fixed;
+  top:0;
+  left:0;
+  z-index:100;
+  width:100%;
+  .logo{
+      width:60px;
+      margin:0 10px;
+  }
+  ul {
+    width:auto;
+    display: flex;
+    flex:1;
+    flex-direction: row;
+    justify-content: flex-start;
+    margin: 0 10px;
+    li {
+      margin: 10px;
+      a {
+        font-size: 16px;
+        font-weight: bold;
+        color: $brandColorDark;
+        transition: 0.5s;
+        &.router-link-exact-active {
+          color: $brandColorlight;
+        }
+        &:hover{
+            
+          color:$brandColorWhite;  
+        }
+      }
+    }
+  }
+  .authMenu{
+    min-width: 180px;
+    display: flex;
+    justify-content: flex-end;
+    margin: 0 10px;
+    .auth-button {
+        display: inline-block;
+        margin: 10px;
+        font-size: 16px;
+        color: $brandColorDark;
+        font-weight: bold;
+        text-transform: uppercase;
+        cursor: pointer;
+        transition: 0.5s;
+        &.router-link-exact-active {
+            color: $brandColorlight;
+          }
+          &:hover{
+           
+          color:$brandColorWhite;  
+        }
+      }
+  }
+  
+}

@@ -13,9 +13,6 @@ import Post from '../srcripts/Post.js'
     })
 
     export const mutations = {
-        increment (state) {
-          state.counter++
-        },
         savePosts (state, payload) {
             state.posts=payload
           },

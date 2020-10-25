@@ -13,22 +13,27 @@
       
   </article>
  
-  <!-- <CommentsBlock :id="id">
+  <CommentsBlock :comments="comments">
 
-  </CommentsBlock> -->
+  </CommentsBlock>
   </div>
 </template>
 
 <script>
+import CommentsBlock from "@/components/CommentsBlock.vue"
 export default {
   name: "Home",
    async fetch({store,route}) {
       await store.dispatch('posts/getPost', route.params.id)
+      await store.dispatch('comments/getComments', route.params.id)
    },
 //     validate ({ params }) {
 //     // Должен быть числом
 //     return /^\d+$/.test(params.id)
 //   },
+components:{
+CommentsBlock
+},
   data() {
     return {};
   },
@@ -38,7 +43,10 @@ export default {
     computed: {
           post(){
               return this.$store.getters['posts/getPost'];
-          }
+          },
+          comments() {
+          return this.$store.getters['comments/getComments'];
+          },
   },
   methods:{
       formatTime(time) {
@@ -50,5 +58,6 @@ export default {
 </script>
 
 <style  lang="scss">
-@import "./../../assets/scss/views/_post.scss";
+@import "@/assets/scss/views/_post.scss";
+@import "@/assets/scss/components/_commentsBlock.scss";
 </style>
