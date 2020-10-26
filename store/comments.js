@@ -1,7 +1,5 @@
 import firebase from 'firebase/app'
 import Comment from '../srcripts/Comment.js'
-
-
     export const state = () => ({
         comments:[]
     })
@@ -14,7 +12,8 @@ import Comment from '../srcripts/Comment.js'
         async getComments({commit}, payload) {
             
             try {
-                
+                commit('clearError', null,{ root: true })
+                commit('setLoading', true,{ root: true })
                  const coment= await firebase.database().ref('posts/'+payload+'/comments/').once('value');
                  const coments =coment.val();
                  const commentsArray = [];
@@ -34,7 +33,10 @@ import Comment from '../srcripts/Comment.js'
                 }
                 
                 commit('saveComments', commentsArray)
+                commit('setLoading',false,{ root: true })
             } catch (error) {
+                commit('setLoading', false,{ root: true })
+                commit('setError', error.message,{ root: true })
                 throw error
             }
         }

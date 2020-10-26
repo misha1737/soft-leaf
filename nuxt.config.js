@@ -19,6 +19,7 @@ export default {
 
   // Plugins to run before rendering page (https://go.nuxtjs.dev/config-plugins)
   plugins: [
+    { src: '~plugins/Vuelidate.js'}
   ],
 
   // Auto import components (https://go.nuxtjs.dev/config-components)
@@ -47,10 +48,13 @@ export default {
         appId: '1:820675737205:web:6c383a836505b625c6aa3c',
       },
       services: {
-        auth: true // Just as example. Can be any other service.
+        auth: {
+          ssr: true
+        } // Just as example. Can be any other service.
       }
+      
     },
-
+    
   // Build Configuration (https://go.nuxtjs.dev/config-build)
   build: {
   }

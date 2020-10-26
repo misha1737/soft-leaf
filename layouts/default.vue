@@ -8,8 +8,14 @@
 
 <script>
 import Header from './../components/Header.vue'
+import firebase from 'firebase/app'
 // import AdminPanel from './components/AdminPanel.vue'
 export default {
+  async fetch({store}) {
+    
+    await store.dispatch('categories/loadCategories')
+    
+  },
   name: 'app',
      data(){
             return{
@@ -18,6 +24,19 @@ export default {
         },
   components: {
     Header,
+  },
+
+
+  created(){
+    if (!firebase.app.length){
+      app=firebase.initializeApp(firebaseConfig);
+    }
+    firebase.auth().onAuthStateChanged(user=>{
+      if (user){
+        this.$store.dispatch('user/loggedUser', user)
+      }
+      
+    })
   },
    computed: {
   // isUserAdmin(){

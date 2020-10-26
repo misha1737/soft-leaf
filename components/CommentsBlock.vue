@@ -41,7 +41,6 @@ export default {
       comments:Array
   },
   components: {
-    // autorizationBlock,
   },
   methods: {
     saveComment() {
@@ -68,9 +67,7 @@ export default {
   },
   computed: {
     checkUser() {
-     // return this.$store.getters.checkUser;
     },
-    
   },
 };
 </script>

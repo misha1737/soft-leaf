@@ -1,7 +1,7 @@
 <template>
   <div class="contentBlock">
     <div class="catalog">
-      <div class="posts">
+      <div class="posts" v-if="posts">
         <div v-for="post in posts" :key="post.id">
           <nuxt-link class="postPreview" :to="'/post/' + post.id">
             <div class="postPreview__img">
@@ -9,7 +9,7 @@
               <img
                 v-else
                 class="postPreview__img"
-                src="./../assets/post.jpg"
+                src="@/assets/post.jpg"
                 alt
               />
             </div>
@@ -26,36 +26,34 @@
 </template>
 
 <script>
-import { mapState, mapMutations, mapGetters } from "vuex";
+
 export default {
   name: "Home",
+   async fetch({store,route}) {
+      await store.dispatch('posts/getPosts', route.params.id)
+   },
+
   data() {
     return {};
   },
-  props: {
-    id: String,
+  beforeCreate(){
+     // this.$store.dispatch('posts/getPost', this.$route.params.id)
   },
-  async fetch({ store }) {
-    if (store.getters["posts/AllPosts"].length < 1) {
-      await store.dispatch("posts/getPosts");
-    }
+    computed: {
+          posts(){
+              return this.$store.getters['posts/AllPosts'];
+          },
+      
   },
-
-  methods: {
-    formatTime(time) {
+  methods:{
+      formatTime(time) {
       let t = new Date(time);
       return t.toLocaleString();
     },
-  },
-  mounted() {},
-  computed: {
-    ...mapGetters({
-      posts: "posts/AllPosts",
-    }),
-  },
-};
+  }
+}
 </script>
 
-<style lang="scss">
-@import "./../assets/scss/views/_catalog.scss";
+<style  lang="scss">
+
 </style>
